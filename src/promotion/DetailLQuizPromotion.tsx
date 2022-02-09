@@ -129,14 +129,14 @@ function TopicPopup({ open, onCloseModal }: any) {
                       <div className="form-group">
                         <label>Thời gian bắt đầu: </label>
                         <input onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                          setForm({ ...form, timeStart: Number(e.currentTarget.valueAsDate?.getTime()) })
-                        }} type="date" className="form-control" />
+                          setForm({ ...form, timeStart: e.currentTarget.valueAsNumber})
+                        }} type="datetime-local" className="form-control" />
                       </div>
                       <div className="form-group">
                         <label>Thời gian kết thúc: </label>
                         <input onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                          setForm({ ...form, timeEnd: Number(e.currentTarget.valueAsDate?.getTime()) })
-                        }} type="date" className="form-control" />
+                          setForm({ ...form, timeEnd: e.currentTarget.valueAsNumber })
+                        }} type="datetime-local" className="form-control" />
                       </div>
                     </div>
                   </div>

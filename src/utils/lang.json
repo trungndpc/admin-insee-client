@@ -1,0 +1,183 @@
+{
+    "share-oa-to-friend": {
+        "vi": "Chia sẻ OA này tới bạn bè",
+        "en": "Share this OA to friends",
+        "my": "Share this OA to friends"
+    },
+    "view-qr-code-oa": {
+        "vi": "Xem mã QR của OA",
+        "en": "View QR code of this OA",
+        "my": "View QR code of this OA"
+    },
+    "label-unfollow-oa": {
+        "vi": "Bỏ quan tâm",
+        "en": "Unfollow",
+        "my": "Unfollow"
+    },
+    "label-follow-oa": {
+        "vi": "Quan tâm",
+        "en": "Follow",
+        "my": "Follow"
+    },
+    "label-report-oa": {
+        "vi": "Báo xấu",
+        "en": "Report",
+        "my": "Report"
+    },
+    "btn-label-follow": {
+        "vi": "Quan tâm",
+        "en": "Follow",
+        "my": "Follow"
+    },
+    "btn-label-send-msg": {
+        "vi": "Nhắn tin",
+        "en": "Message",
+        "my": "Message"
+    },
+    "label-detail-desc": {
+        "vi": "Thông tin chi tiết",
+        "en": "About",
+        "my": "About"
+    },
+    "btn-seemore-detail": {
+        "vi": "Xem thêm",
+        "en": "See more",
+        "my": "See more"
+    },
+    "btn-shortcut-detail": {
+        "vi": "Rút gọn",
+        "en": "Shortcut",
+        "my": "Shortcut"
+    },
+    "verification-desc": {
+        "vi": "OA này đã được xác thực bởi Zalo",
+        "en": "This OA is verified by Zalo",
+        "my": "This OA is verified by Zalo"
+    },
+    "verification-desc-detail": {
+        "vi": "Zalo đã xác thực thông tin và quyền sở hữu tài khoản OA này dựa trên giấy phép hoạt động và thông tin doanh nghiệp / tổ chức, người đại diện.\nDoanh nghiệp / tổ chức, hoặc người đại diện chịu trách nhiệm về tính minh bạch và an toàn trong các hoạt động của người dùng thông qua tài khoản OA này.",
+        "en": "Zalo has verified information and ownership of this OA based on operation license and business / organization information, the representative.\nThe business / organization, or its representative is responsible for transparency and safety of the user's activities through this OA.",
+        "my": "Zalo has verified information and ownership of this OA based on operation license and business / organization information, the representative.\nThe business / organization, or its representative is responsible for transparency and safety of the user's activities through this OA."
+    },
+    "label-article-desc": {
+        "vi": "Bài viết",
+        "en": "Articles",
+        "my": "Articles"
+    },
+    "message.not-allow-to-follow": {
+        "vi": "Bạn không thể quan tâm Official Account này. Chỉ những người nhận được lời mời mới có thể quan tâm.",
+        "en": "You cannot follow this Official Account. Only invited people can follow.",
+        "my": "You cannot follow this Official Account. Only invited people can follow."
+    },
+    "message.follow-fail-1": {
+        "vi": "Không thể quan tâm Official Account này. Vui lòng thử lại.",
+        "en": "Cannot follow this Official Account. Please try again.",
+        "my": "Cannot follow this Official Account. Please try again."
+    },
+    "message.follow-fail-9": {
+        "vi": "Official Account này không tồn tại.",
+        "en": "This Official Account is not existed.",
+        "my": "This Official Account is not existed."
+    },
+    "message.follow-fail-2005": {
+        "vi": "Official Account này đang bị khóa.",
+        "en": "This Official Account is blocked or disabled.",
+        "my": "This Official Account is blocked or disabled."
+    },
+    "message.follow-fail-19": {
+        "vi": "Bạn không thể quan tâm được OA này. Vui lòng liên hệ người quản lý OA này để được hỗ trợ.",
+        "en": "You cannot follow this OA. Please contact admin of this OA to get help.",
+        "my": "You cannot follow this OA. Please contact admin of this OA to get help."
+    },
+    "message.follow-fail-36": {
+        "vi": "Official Account này đã đạt giới hạn quan tâm tối đa.",
+        "en": "This Official Account has reached maximum following limitation.",
+        "my": "This Official Account has reached maximum following limitation."
+    },
+    "message.follow-fail-27": {
+        "vi": "Bạn đã đạt giới hạn quan tâm tối đa.",
+        "en": "You has reached maximum following limitation.",
+        "my": "You has reached maximum following limitation."
+    },
+    "message.follow-fail-20": {
+        "vi": "Official Account này chưa sẵn sàng",
+        "en": "This Official Account is not ready yet",
+        "my": "This, Official Account is not ready yet"
+    },
+    "msg-native-fail": {
+        "vi": "Không thể thực hiện thao tác này. Vui lòng thử lại hoặc liên hệ admin của OA.",
+        "en": "This action cannot be processed. Please try again or contact OA admin.",
+        "my": "This action cannot be processed. Please try again or contact OA admin."
+    },
+    "quick-action" : {
+        "vi": "Tương tác nhanh",
+        "en": "Quick Actions",
+        "my": "Quick Actions"
+    },
+    "lb-service" : {
+        "vi": "Dịch vụ",
+        "en": "Services",
+        "my": "Services"
+    },
+    "lb-call" : {
+        "vi": "Gọi thoại",
+        "en": "Call",
+        "my": "Call"
+    },
+    "see-more" : {
+        "vi": "Xem thêm",
+        "en": "See more",
+        "my": "See more"
+    },
+    "see-less" : {
+        "vi": "Thu gọn",
+        "en": "See less",
+        "my": "See less"
+    },
+    "report": {
+        "vi": "Báo xấu OA này",
+        "en": "Report",
+        "my": "Report"
+    },
+    "oa-disabled": {
+        "vi": "Official Account này đang bị khóa.",
+        "en": "This Official Account is disabled.",
+        "my": "This Official Account is disabled."
+    },
+    "oa-unfollow-question": {
+        "vi": "Bạn muốn bỏ quan tâm",
+        "en": "Do you want to unfollow ",
+        "my": "Do you want to unfollow "
+    },
+    "btn-cancel" : {
+        "vi": "Hủy",
+        "en": "Cancel",
+        "my": "Cancel"
+    },
+    "lb-operating-24-24": {
+        "vi": "Hoạt động 24/24",
+        "en": "Operating 24/24",
+        "my": "Operating 24/24"
+    },
+    "lb-opening": {
+        "vi": "Đang mở cửa",
+        "en": "Opening",
+        "my": "Opening"
+    },
+    "lb-closed": {
+        "vi": "Đã đóng cửa",
+        "en": "Closed",
+        "my": "Closed"
+    },
+    "lb-open-at": {
+        "vi": "Mở cửa lúc",
+        "en": "Open at",
+        "my": "Open at "
+    },
+    "lb-close-at": {
+        "vi": "Đóng cửa lúc",
+        "en": "Close at",
+        "my": "Close at"
+    }
+   
+}

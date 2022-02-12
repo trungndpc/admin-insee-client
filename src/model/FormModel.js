@@ -2,7 +2,7 @@ import APIUtil from '../utils/APIUtils'
 
 export default class FormModel {
 
-  
+
     static findByPromotionId(promotionId) {
         return new Promise((resolve, reject) => {
             APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/form/find-by-promotion?promotionId=${promotionId}`, resolve, reject);
@@ -22,5 +22,17 @@ export default class FormModel {
         });
     }
 
-   
+    static findLQForm(promotionId, topicId, page, pageSize) {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/lq-form/find?promotionId=${promotionId}&topicId=${topicId}&page=${page}&pageSize=${pageSize}`, resolve, reject);
+        });
+    }
+
+    static endTopic(promotionId, topicId) {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/promotion/lighting-quiz/end-topic?id=${promotionId}&topicId=${topicId}`, resolve, reject);
+        });
+    }
+
+
 }

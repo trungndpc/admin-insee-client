@@ -7,13 +7,13 @@ import { useParams } from "react-router-dom";
 import UserModel from "./model/UserModel";
 import { User } from "./interface";
 import { City, District } from "./utils/ProvinceUtil";
-import * as UserStatus from '../src/constant/UserStatus';
-import default_avatar from '../src/resource/images/ava.png'
+import { AreYouSurePopup } from "./popup";
+import * as UserStatus from './constant/UserStatus';
 
-
+const default_avatar = 'http://cdn.onlinewebfonts.com/svg/img_264570.png'
 function DetailRetailer() {
   let { id } = useParams();
-  const [isShowImgModel, setIsShowImgModel] = useState(false)
+  const [isShowConfirmPopup, setIsShowConfirmPopup] = useState(false)
   const [user, setUser] = useState<User>()
 
   const fetchUser = (id: any) => {
@@ -25,12 +25,27 @@ function DetailRetailer() {
       })
   }
 
+  const updateStatus = (id: any, status: number) => {
+    UserModel.updateStatus(id, status)
+      .then(resp => {
+        if (resp.error == 0) {
+          fetchUser(id);
+        }
+      })
+  }
+
   useEffect(() => {
     fetchUser(id)
   }, [])
 
   return (
     <Layout>
+      {<AreYouSurePopup open={isShowConfirmPopup} onAgree={() => {
+        setIsShowConfirmPopup(false)
+        updateStatus(user?.id, UserStatus.APPROVED)
+      }} onCloseModal={() => {
+        setIsShowConfirmPopup(false)
+      }} />}
       <main className="content">
         <div className="container-fluid">
           <div className="row">
@@ -73,15 +88,14 @@ function DetailRetailer() {
                               </div>
                             </div>
                           </div>
-
                         </form>
                       }
                     </div>
                     {user &&
                       <div className="card-footer">
-                        {/* {user.status == UserStatus.WAIT_APPROVAL && */}
-                          <button type="submit" className="btn btn-danger m-btn-danger">Duyệt</button>
-                        {/* } */}
+                        {user.status == UserStatus.WAIT_APPROVAL &&
+                          <button onClick={() => { setIsShowConfirmPopup(true) }} type="submit" className="btn btn-danger m-btn-danger">Duyệt</button>
+                        }
                         <button style={{ marginLeft: '30px', padding: '5px 30px' }} type="submit" className="btn btn-delete">Xóa</button>
                       </div>
                     }
@@ -90,9 +104,6 @@ function DetailRetailer() {
               </div>
             </div>
           </div>
-          {isShowImgModel &&
-            <ImagePopup open={isShowImgModel} onCloseModal={() => { setIsShowImgModel(false) }} />
-          }
         </div>
       </main>
     </Layout>
@@ -101,38 +112,3 @@ function DetailRetailer() {
 }
 
 export default DetailRetailer;
-
-const owlClass = "popup";
-export function ImagePopup({ open, onCloseModal }: any) {
-  return (
-    <Modal
-      open={open}
-      onClose={onCloseModal}
-      center
-      showCloseIcon={false}
-      styles={{
-        modal: {
-          background: "rgba(242, 242, 242, 0.94)",
-          backdropFilter: "blur(54.3656px)",
-          borderRadius: "14px",
-          padding: "0",
-          maxWidth: "80%"
-        },
-      }}
-    >
-      <div className={owlClass}>
-        <div className={`${owlClass}__wrapper`}>
-          <img src="https://scuffedentertainment.com/wp-content/uploads/2021/09/perfect-wallpaper-quiz.jpg" alt="" />
-        </div>
-        <div className={`${owlClass}__group-btn`}>
-          <div
-            className={`${owlClass}__group-btn__item right`}
-            onClick={onCloseModal}
-          >
-            Đóng
-          </div>
-        </div>
-      </div>
-    </Modal>
-  );
-}

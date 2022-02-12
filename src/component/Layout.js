@@ -29,11 +29,11 @@ export default class Layout extends React.PureComponent {
                                     <i className="align-middle mr-2 fas fa-fw fa-file" /> <span className="align-middle">Retailer</span>
                                 </Link>
                             </li>
-                            <li className="sidebar-item">
+                            {/* <li className="sidebar-item">
                                 <Link to="/stock-form" data-toggle="collapse" className="sidebar-link collapsed">
                                     <i className="align-middle mr-2 fas fa-fw fa-sign-in-alt" /> <span className="align-middle">Stock Form </span>
                                 </Link>
-                            </li>
+                            </li> */}
                             <li className="sidebar-item">
                                 <Link to="/post" data-toggle="collapse" className="sidebar-link collapsed">
                                     <i className="align-middle mr-2 fas fa-fw fa-sign-in-alt" /> <span className="align-middle">Post </span>

@@ -8,7 +8,8 @@ import {
   Link
 } from "react-router-dom";
 import DetailLQuizTopic, { LQuizTopicModal } from "./DetailLQuizTopic";
-import LQPromotionModel from '../../src/model/LQPromotionModel'
+import LQPromotionModel from '../../src/model/LQPromotionModel';
+import * as TopicStatus from '../constant/TopicStatus';
 
 function DetailLQuizPromotion() {
   let { id, topicId } = useParams()
@@ -47,7 +48,7 @@ function ListTopicLQuiz() {
       }} />
       <div className="card">
         <div className="card-header">
-          <h5 className="card-title">Dach sách chủ đề</h5>
+          <h5 className="card-title m-card-title">Dach sách chủ đề</h5>
           <div className="cart-btn-bar">
             <button onClick={() => { setIsShowTopicModal(true) }} className="btn btn-primary mr-1">Thêm chủ đề mới</button>
           </div>
@@ -56,18 +57,21 @@ function ListTopicLQuiz() {
           <thead>
             <tr>
               <th>Title</th>
-              <th>Time start</th>
-              <th>Time end</th>
+              <th>Time Start</th>
+              <th>Time End</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {promtoion && promtoion.topics && promtoion.topics.map((topic: Topic) => {
+              console.log(topic)
               return (
                 <tr>
                   <td>{topic.title}</td>
                   <td>{new Date(topic.timeStart).toLocaleString('vi')}</td>
                   <td>{new Date(topic.timeEnd).toLocaleString('vi')}</td>
+                  <td><span style={{backgroundColor: TopicStatus.findColor(topic.status)}} className="badge">{TopicStatus.findName(topic.status)}</span></td>
                   <td className="table-action">
                     <Link to={`/promotion/detail/${id}/${topic.id}`}><i style={{ fontSize: '30px' }} className="align-middle ion ion-ios-play mr-2" /></Link>
                   </td>

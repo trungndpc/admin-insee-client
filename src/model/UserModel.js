@@ -21,4 +21,10 @@ export default class UserModel {
         });
     }
 
+    static updateStatus(id, status) {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/user/update-status?&uid=${id}&status=${status}`, resolve, reject);
+        });
+    }
+
 }

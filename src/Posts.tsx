@@ -7,7 +7,6 @@ import { Page, Post } from "./interface";
 import { Link } from "react-router-dom";
 import { City } from "./utils/ProvinceUtil";
 
-
 function Posts() {
   const [postPage, setPostPage] = useState<Page<Post>>()
 
@@ -37,7 +36,7 @@ function Posts() {
             <div className="col-12 col-xl-12">
               <div className="card">
                 <div className="card-header">
-                  <h5 className="card-title">Danh sách các bài viết</h5>
+                  <h5 className="card-title m-card-title">Danh sách các bài viết</h5>
                   <div className="cart-btn-bar">
                     <Link to={"/post/create"} className="btn btn-primary mr-1">Thêm bài viết mới</Link>
                   </div>

@@ -5,6 +5,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+// import Alert from 'react-s-alert';
 
 import '../src/resource/css/modern.css';
 import '../src/resource/css/index.css'
@@ -22,6 +23,10 @@ import CreatePromotion from './CreatePromotion';
 import Promotions from './Promotions';
 import DetailPromotion from './DetailPromotion';
 import DetailForm from '../src/DetailForm';
+import ListLightingQuizForm from './ListLightingQuizForm';
+
+// import 'react-s-alert/dist/s-alert-default.css';
+// import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -36,6 +41,7 @@ ReactDOM.render(
         <Route path="/post" element={<Posts />} />
         <Route path="/promotion/create" element={<CreatePromotion />}/>
         <Route path="/promotion" element={<Promotions />} />
+        <Route path="/form/list/:id/:topicId" element={<ListLightingQuizForm />} />
         <Route path="/promotion/detail/:id" element={<DetailPromotion />} />
         <Route path="/promotion/detail/:id/:topicId" element={<DetailPromotion />} />
         <Route path="/form/detail/:id" element={<DetailForm />} />
@@ -43,6 +49,7 @@ ReactDOM.render(
 
       </Routes>
     </BrowserRouter>
+    {/* <Alert stack={{ limit: 3 }} /> */}
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -2,12 +2,11 @@ import "react-responsive-modal/styles.css";
 import Modal from "react-responsive-modal";
 import '../../src/popup/styles.scss'
 import React, { useEffect, useReducer, useState } from "react";
-import { StockForm, Topic } from "../interface";
-import { City, District } from "../utils/ProvinceUtil";
+import { Topic } from "../interface";
 import { Question, Answer } from '../interface/index'
 import LQPromotionModel from '../model/LQPromotionModel'
-import { useParams } from "react-router-dom";
-
+import { Link, useParams } from "react-router-dom";
+import * as TopicStatus from '../constant/TopicStatus'
 
 function DetailLQuizTopic({ data }: any) {
   let { id, topicId } = useParams()
@@ -31,16 +30,23 @@ function DetailLQuizTopic({ data }: any) {
   return (
     <div className="col-12 col-xl-12">
       {isShowImgModel && <LQuizTopicModal open={isShowImgModel} data={question}
-        onCloseModal={() => { 
+        onCloseModal={() => {
           setIsShowImgModel(false)
           fetchTopic()
-           }} />}
+        }} />}
       <div className="card">
         <div className="card-header">
-          <h5 className="card-title">Dach sách hỏi của chủ đề</h5>
-          <div className="cart-btn-bar">
-            <button onClick={() => { setIsShowImgModel(true); setQuestion({} as Question) }} className="btn btn-primary mr-1">Thêm câu hỏi</button>
-          </div>
+          <h5 className="card-title m-card-title">Dach sách hỏi của chủ đề</h5>
+          {topic && topic.status == TopicStatus.INIT &&
+            <div className="cart-btn-bar">
+              <button onClick={() => { setIsShowImgModel(true); setQuestion({} as Question) }} className="btn btn-primary mr-1">Thêm câu hỏi</button>
+            </div>
+          }
+          {topic && topic.status != TopicStatus.INIT &&
+            <div className="cart-btn-bar">
+              <Link to={"/form/list/" + id + "/" + topicId} className="btn btn-primary mr-1">Danh sách tham gia</Link>
+            </div>
+          }
         </div>
         <table className="table table-striped table-hover">
           <thead>

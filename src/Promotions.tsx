@@ -38,7 +38,7 @@ function Promotions() {
             <div className="col-12 col-xl-12">
               <div className="card">
                 <div className="card-header">
-                  <h5 className="card-title">Danh sách các chiến dịch khuyến mãi</h5>
+                  <h5 className="card-title m-card-title">Danh sách các chiến dịch khuyến mãi</h5>
                   <div className="cart-btn-bar">
                     <Link to={"/promotion/create"} className="btn btn-primary mr-1">Thêm chiến dịch mới</Link>
                   </div>

@@ -76,6 +76,18 @@ export interface StockForm extends Form {
     jsonImg: ImgRealtimePhoto
 }
 
+export interface TopicLightingQuizForm {
+    topicId: string,
+    timeStart: number,
+    timeEnd: number,
+} 
+
+export interface LightingQuizForm extends Form {
+    point : number,
+    topicId: string,
+    jsonDetail: TopicLightingQuizForm
+}
+
 export interface Answer {
     id: string,
     content: string,
@@ -94,6 +106,7 @@ export interface Topic {
     questions:  Array<Question>
     timeStart : number;
     timeEnd : number;
+    status: number;
 }
 
 export interface LQPromotion extends Promotion {

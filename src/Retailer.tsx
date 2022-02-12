@@ -7,10 +7,10 @@ import { RegisterForm, Page, User } from "./interface";
 import { City, District } from './utils/ProvinceUtil'
 import { getListForRetailer } from "./utils/CementUtil";
 import UserModel from "./model/UserModel";
-import * as UserStatus from '../src/constant/UserStatus';
 import { Link } from "react-router-dom";
-import default_avatar from '../src/resource/images/ava.png'
+import * as UserStatus from './constant/UserStatus';
 
+const  default_avatar = 'http://cdn.onlinewebfonts.com/svg/img_264570.png'
 const PAGE_SIZE = 10;
 function Retailer() {
   const [page, setPage] = useState(0);
@@ -59,6 +59,7 @@ function Retailer() {
                       <th>SDT</th>
                       <th>Cửa hàng</th>
                       <th>Thành phố / Quận</th>
+                      <th>Trạng thái</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -71,6 +72,7 @@ function Retailer() {
                           <td>{user.phone}</td>
                           <td>{user.phone}</td>
                           <td>{City.getName(user.cityId)}</td>
+                          <td><span style={{backgroundColor: UserStatus.findColor(user.status)}} className="badge badge-info">{UserStatus.findName(user.status)}</span></td>
                           <td className="table-action">
                             <Link  to={`/retailer/${user.id}`}><i style={{fontSize: '30px'}} className="align-middle ion ion-ios-play mr-2" /></Link>
                           </td>

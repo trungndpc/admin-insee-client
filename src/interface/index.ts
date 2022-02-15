@@ -1,4 +1,5 @@
 export interface RegisterForm {
+    inseeId: string,
     phone: string,
     name: string,
     cityId: number,
@@ -17,6 +18,7 @@ export interface User {
     districtId: number,
     address: string,
     products: Array<number>
+    inseeId: string
 }
 
 export interface Post {
@@ -111,4 +113,10 @@ export interface Topic {
 
 export interface LQPromotion extends Promotion {
     topics: Array<Topic>
+}
+
+export interface UserFilter {
+    cityId: number,
+    status: number,
+    search: string
 }

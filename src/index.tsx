@@ -5,7 +5,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-// import Alert from 'react-s-alert';
+import Alert from 'react-s-alert';
 
 import '../src/resource/css/modern.css';
 import '../src/resource/css/index.css'
@@ -25,8 +25,8 @@ import DetailPromotion from './DetailPromotion';
 import DetailForm from '../src/DetailForm';
 import ListLightingQuizForm from './ListLightingQuizForm';
 
-// import 'react-s-alert/dist/s-alert-default.css';
-// import 'react-s-alert/dist/s-alert-css-effects/slide.css';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -49,7 +49,7 @@ ReactDOM.render(
 
       </Routes>
     </BrowserRouter>
-    {/* <Alert stack={{ limit: 3 }} /> */}
+    <Alert stack={{ limit: 3 }} />
   </React.StrictMode>,
   document.getElementById('root')
 );

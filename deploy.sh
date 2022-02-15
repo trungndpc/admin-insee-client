@@ -1,7 +1,5 @@
-yarn build
 
-cd build/
+local_dir=./
+server=stackops@61.28.229.63
 
-cp index.html 200.html
-
-surge
+rsync -a $local_dir/build/ $server:/var/www/admin.insee.udev.com.vn/html

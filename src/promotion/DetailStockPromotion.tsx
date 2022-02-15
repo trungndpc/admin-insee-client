@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import FormModel from "../model/FormModel";
 import { useEffect, useState } from "react";
 import { Form, Page, StatsForm } from "../interface";
+import * as StockFormStatus from '../constant/StockFormStatus';
 
 function DetailStockPromotion() {
     let { id } = useParams();
@@ -45,7 +46,7 @@ function DetailStockPromotion() {
                                         {item.user.name}
                                     </td>
                                     <td>June 21, 1961</td>
-                                    <td>Chờ duyệt</td>
+                                    <td><span style={{ backgroundColor: StockFormStatus.findColor(item.status) }} className="badge">{StockFormStatus.findName(item.status)}</span></td>
                                     <td className="table-action">
                                         <Link to={`/form/detail/${item.id}`}><i style={{ fontSize: '30px' }} className="align-middle ion ion-ios-play mr-2" /></Link>
                                     </td>

@@ -33,6 +33,12 @@ export default class FormModel {
             APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/promotion/lighting-quiz/end-topic?id=${promotionId}&topicId=${topicId}`, resolve, reject);
         });
     }
+    
+    static updateStatus(formId, status) {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/form/update-status?id=${formId}&status=${status}`, resolve, reject);
+        });
+    }
 
 
 }

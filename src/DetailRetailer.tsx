@@ -9,11 +9,14 @@ import { User } from "./interface";
 import { City, District } from "./utils/ProvinceUtil";
 import { AreYouSurePopup } from "./popup";
 import * as UserStatus from './constant/UserStatus';
+import { getListForRetailer } from "./utils/CementUtil";
+import AlertUtils from "./utils/AlertUtils";
 
 const default_avatar = 'http://cdn.onlinewebfonts.com/svg/img_264570.png'
 function DetailRetailer() {
   let { id } = useParams();
   const [isShowConfirmPopup, setIsShowConfirmPopup] = useState(false)
+  const [isShowConfirmUpdatePopup, setIsShowConfirmUpdatePopup] = useState(false)
   const [user, setUser] = useState<User>()
 
   const fetchUser = (id: any) => {
@@ -34,6 +37,18 @@ function DetailRetailer() {
       })
   }
 
+  const update = () => {
+    UserModel.update(user?.id, user)
+      .then(resp => {
+        if (resp.error == 0) {
+          fetchUser(user?.id)
+          AlertUtils.showSuccess("Thành công")
+        } else {
+          AlertUtils.showError(resp.msg)
+        }
+      })
+  }
+
   useEffect(() => {
     fetchUser(id)
   }, [])
@@ -46,6 +61,14 @@ function DetailRetailer() {
       }} onCloseModal={() => {
         setIsShowConfirmPopup(false)
       }} />}
+
+      {<AreYouSurePopup open={isShowConfirmUpdatePopup} onAgree={() => {
+        setIsShowConfirmUpdatePopup(false)
+        update()
+      }} onCloseModal={() => {
+        setIsShowConfirmUpdatePopup(false)
+      }} />}
+
       <main className="content">
         <div className="container-fluid">
           <div className="row">
@@ -62,8 +85,12 @@ function DetailRetailer() {
                           <div className="row">
                             <div className="col-md-8">
                               <div className="form-group">
+                                <label htmlFor="inputUsername">INSEE ID</label>
+                                <input type="text" onChange={(e: React.FormEvent<HTMLInputElement>) => { setUser({ ...user, inseeId: e.currentTarget.value }) }} className="form-control" value={user.inseeId} />
+                              </div>
+                              <div className="form-group">
                                 <label htmlFor="inputUsername">Tên</label>
-                                <input type="text" className="form-control" value={user.name} />
+                                <input type="text" onChange={(e: React.FormEvent<HTMLInputElement>) => { setUser({ ...user, name: e.currentTarget.value }) }} className="form-control" value={user.name} />
                               </div>
                               <div className="form-group">
                                 <label htmlFor="inputUsername">Số điện thoại</label>
@@ -71,21 +98,54 @@ function DetailRetailer() {
                               </div>
                               <div className="form-group">
                                 <label htmlFor="inputUsername">Thành phố / Tỉnh</label>
-                                <input type="text" className="form-control" value={City.getName(user.cityId)} />
+                                <select className="form-control" value={user.cityId} onChange={(e: React.FormEvent<HTMLSelectElement>) => { setUser({ ...user, cityId: Number(e.currentTarget.value) }) }}>
+                                  {(!user.cityId || user.cityId == 0) &&
+                                    <option value={0}></option>
+                                  }
+                                  {City.getList().map((value) => {
+                                    return (
+                                      <option key={value.key} value={value.key}>{value.value}</option>
+                                    )
+                                  })}
+                                </select>
                               </div>
                               <div className="form-group">
                                 <label htmlFor="inputUsername">Quận / Huyện</label>
-                                <input type="text" className="form-control" value={District.getName(user.districtId)} />
+                                <select className="form-control" value={user.districtId} onChange={(e: React.FormEvent<HTMLSelectElement>) => { setUser({ ...user, districtId: Number(e.currentTarget.value) }) }}>
+                                  {(!user.districtId || user.districtId == 0) &&
+                                    <option value={0}></option>
+                                  }
+                                  {(user.cityId && user.cityId != 0) && District.getList(user.cityId).map((value) => {
+                                    return (
+                                      <option key={value.key} value={value.key}>{value.value}</option>
+                                    )
+                                  })}
+                                </select>
                               </div>
                               <div className="form-group">
                                 <label htmlFor="inputUsername">Địa chỉ</label>
                                 <input type="text" className="form-control" value={user.address} />
+                              </div>
+                              <div className="form-group">
+                                <label htmlFor="inputUsername">Sản phẩm</label>
+                                <br />
+                                {getListForRetailer().map(value => {
+                                  return (
+                                    <label style={{ display: 'inline-block', paddingRight: '20px' }} className="form-check">
+                                      <input className="form-check-input" checked={user.products ? user.products.includes(Number(value.id)) : false} type="checkbox" />
+                                      <span className="form-check-label">
+                                        {value.name}
+                                      </span>
+                                    </label>
+                                  )
+                                })}
                               </div>
                             </div>
                             <div className="col-md-4">
                               <div className="text-center">
                                 <img alt="Chris Wood" src={user.avatar ? user.avatar : default_avatar} className="rounded-circle img-responsive mt-2" width={128} height={128} />
                               </div>
+
                             </div>
                           </div>
                         </form>
@@ -93,6 +153,9 @@ function DetailRetailer() {
                     </div>
                     {user &&
                       <div className="card-footer">
+                        {user.status != UserStatus.APPROVED &&
+                          <button style={{ marginRight: '40px' }} onClick={() => { setIsShowConfirmUpdatePopup(true) }} type="submit" className="btn btn-danger m-btn-danger">Save</button>
+                        }
                         {user.status == UserStatus.WAIT_APPROVAL &&
                           <button onClick={() => { setIsShowConfirmPopup(true) }} type="submit" className="btn btn-danger m-btn-danger">Duyệt</button>
                         }

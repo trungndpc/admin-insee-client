@@ -4,12 +4,37 @@ import '../../src/popup/styles.scss'
 import { useEffect, useReducer, useState } from "react";
 import { StockForm } from "../interface";
 import { City, District } from "../utils/ProvinceUtil";
-
+import { AreYouSurePopup } from "../popup";
+import FormModel from "../model/FormModel";
+import AlertUtils from "../utils/AlertUtils";
+import * as StockFormStatus from '../constant/StockFormStatus';
 
 function DetailStockForm({ data }: any) {
   const [isShowImgModel, setIsShowImgModel] = useState(false)
+  const [isShowApporvedPopup, setIsShowApporvedPopup] = useState(false)
+  const [isRejectPopup, setIsRejectPopup] = useState(false)
   const [form, setForm] = useState<StockForm>();
 
+  const updateStatus = (id: any, status: number) => {
+    FormModel.updateStatus(id, status)
+      .then(resp => {
+        if (resp.error == 0) {
+          AlertUtils.showSuccess("Thành công!")
+        } else {
+          AlertUtils.showError(resp.msg)
+        }
+        fetchForm()
+      })
+  }
+
+  const fetchForm = () => {
+    FormModel.get(form?.id)
+      .then(resp => {
+        if (resp.error == 0) {
+          setForm(resp.data)
+        }
+      })
+  }
 
   useEffect(() => {
     setForm(data as StockForm)
@@ -54,7 +79,7 @@ function DetailStockForm({ data }: any) {
                           </div>
                           <div className="col-md-8">
                             <div className="text-center">
-                              <img  onClick={() => {setIsShowImgModel(true)}} src={form.jsonImg.url} className="img-responsive mt-2" style={{maxHeight: '500px', maxWidth: '500px', cursor: 'pointer'}}/>
+                              <img onClick={() => { setIsShowImgModel(true) }} src={form.jsonImg.url} className="img-responsive mt-2" style={{ maxHeight: '500px', maxWidth: '500px', cursor: 'pointer' }} />
                             </div>
                           </div>
                         </div>
@@ -63,8 +88,24 @@ function DetailStockForm({ data }: any) {
                     }
                   </div>
                   <div className="card-footer">
-                    <button type="submit" className="btn btn-danger m-btn-danger">Duyệt</button>
-                    <button style={{ marginLeft: '30px', padding: '5px 30px' }} type="submit" className="btn btn-delete">Không duyệt</button>
+                    {form?.status == StockFormStatus.INIT &&
+                      <>
+                        <button onClick={() => setIsShowApporvedPopup(true)} className="btn btn-danger m-btn-danger">Duyệt</button>
+                        <AreYouSurePopup open={isShowApporvedPopup} onCloseModal={() => { setIsShowApporvedPopup(false) }}
+                          onAgree={() => {
+                            updateStatus(form?.id, StockFormStatus.APPROVED)
+                            setIsShowApporvedPopup(false)
+                          }} />
+
+                        <button onClick={() => setIsRejectPopup(true)} style={{ marginLeft: '30px', padding: '5px 30px' }} className="btn btn-delete">Không duyệt</button>
+                        <AreYouSurePopup open={isRejectPopup} onCloseModal={() => { setIsRejectPopup(false) }}
+                          onAgree={() => {
+                            updateStatus(form?.id, StockFormStatus.REJECTED)
+                            setIsRejectPopup(false)
+                          }} />
+                      </>
+                    }
+
                   </div>
                 </div>
               </div>
@@ -72,11 +113,10 @@ function DetailStockForm({ data }: any) {
           </div>
         </div>
         {isShowImgModel &&
-          <ImagePopup open={isShowImgModel} onCloseModal={() => { setIsShowImgModel(false) }} url={form?.jsonImg.url}/>
+          <ImagePopup open={isShowImgModel} onCloseModal={() => { setIsShowImgModel(false) }} url={form?.jsonImg.url} />
         }
       </div>
     </main>
-
   );
 }
 

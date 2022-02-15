@@ -3,22 +3,24 @@ import Modal from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
 import "../src/popup/styles.scss";
 import { useEffect, useState } from "react";
-import { RegisterForm, Page, User } from "./interface";
+import { RegisterForm, Page, User, UserFilter } from "./interface";
 import { City, District } from './utils/ProvinceUtil'
 import { getListForRetailer } from "./utils/CementUtil";
 import UserModel from "./model/UserModel";
 import { Link } from "react-router-dom";
 import * as UserStatus from './constant/UserStatus';
+import AlertUtils from "./utils/AlertUtils";
 
-const  default_avatar = 'http://cdn.onlinewebfonts.com/svg/img_264570.png'
+const default_avatar = 'http://cdn.onlinewebfonts.com/svg/img_264570.png'
 const PAGE_SIZE = 10;
 function Retailer() {
   const [page, setPage] = useState(0);
   const [userPage, setUserPage] = useState<Page<User>>()
   const [isOpenImportCustomerPopup, setIsOpenImportCustomerPopup] = useState(false)
+  const [filter, setFilter] = useState<UserFilter>({} as UserFilter)
 
-  const fetchUsers = () => {
-    UserModel.find(0, PAGE_SIZE)
+  const fetchUsers = (cityId: number, status: number) => {
+    UserModel.find(cityId, status, 0, PAGE_SIZE)
       .then(resp => {
         if (resp.error == 0) {
           setUserPage(resp.data)
@@ -27,13 +29,16 @@ function Retailer() {
   }
 
   useEffect(() => {
-    fetchUsers()
+    fetchUsers(filter.cityId, filter.status)
   }, [])
 
   return (
     <Layout>
       {isOpenImportCustomerPopup &&
-        <ImportCustomerPopup open={isOpenImportCustomerPopup} onCloseModal={() => { setIsOpenImportCustomerPopup(false) }} />
+        <ImportCustomerPopup open={isOpenImportCustomerPopup} onCloseModal={() => {
+          setIsOpenImportCustomerPopup(false)
+          fetchUsers(filter.cityId, filter.status)
+        }} />
       }
       <main className="content">
         <div className="container-fluid">
@@ -45,20 +50,51 @@ function Retailer() {
           <div className="row">
             <div className="col-12 col-xl-12">
               <div className="card">
-                <div className="card-header">
-                  <h5 className="card-title m-card-title">Danh sách cửa hàng</h5>
-                  <div className="cart-btn-bar">
-                    <button onClick={() => { setIsOpenImportCustomerPopup(true) }} className="btn btn-primary mr-1">Import Khách hàng</button>
+                <div className="card-bar" style={{ padding: '10px' }}>
+                  <div className="row ">
+                    <div className="col-2 col-xl-2 ml-auto">
+                      <select value={filter.cityId ? filter.cityId : 0} onChange={(e: React.FormEvent<HTMLSelectElement>) => {
+
+                        fetchUsers(Number(e.currentTarget.value), filter.status)
+                        setFilter({ ...filter, cityId: Number(e.currentTarget.value) })
+
+                      }} className="form-control">
+                        <option value={0}>Thành phố</option>
+                        {City.getList().map((value) => {
+                          return (
+                            <option key={value.key} value={value.key}>{value.value}</option>
+                          )
+                        })}
+                      </select>
+                    </div>
+
+                    <div className="col-2 col-xl-2 ">
+                      <select value={filter.status ? filter.status : 0} onChange={(e: React.FormEvent<HTMLSelectElement>) => {
+
+                        fetchUsers(filter.cityId, Number(e.currentTarget.value))
+                        setFilter({ ...filter, status: Number(e.currentTarget.value) })
+
+                      }} className="form-control">
+                        <option value={0}>Trạng thái</option>
+                        <option value={UserStatus.APPROVED}>Đã duyệt</option>
+                        <option value={UserStatus.WAITING_ACTIVE}>Chờ active</option>
+                        <option value={UserStatus.WAIT_APPROVAL}>Chờ duyệt</option>
+                        <option value={UserStatus.WAIT_COMPLETE_PROFILE}>Chờ hoàn thành hồ sơ</option>
+                      </select>
+                    </div>
+                    <button style={{ marginRight: '10px !important' }} onClick={() => { setIsOpenImportCustomerPopup(true) }} className="btn btn-primary mr-1">Import Khách hàng</button>
                   </div>
+
                 </div>
                 <table className="table">
                   <thead>
                     <tr>
-                      <th>ID</th>
+                      {/* <th>No.</th> */}
                       <th></th>
                       <th>SDT</th>
                       <th>Cửa hàng</th>
                       <th>Thành phố / Quận</th>
+                      <th>INSEE ID</th>
                       <th>Trạng thái</th>
                       <th>Actions</th>
                     </tr>
@@ -67,14 +103,15 @@ function Retailer() {
                     {userPage && userPage.list && userPage.list.map((user, key) => {
                       return (
                         <tr>
-                          <td>{user.id}</td>
+                          {/* <td>{user.id}</td> */}
                           <td><img className="m-avatar" src={user.avatar ? user.avatar : default_avatar} /></td>
                           <td>{user.phone}</td>
-                          <td>{user.phone}</td>
+                          <td>{user.name}</td>
                           <td>{City.getName(user.cityId)}</td>
-                          <td><span style={{backgroundColor: UserStatus.findColor(user.status)}} className="badge badge-info">{UserStatus.findName(user.status)}</span></td>
+                          <td>{user.inseeId}</td>
+                          <td><span style={{ backgroundColor: UserStatus.findColor(user.status) }} className="badge badge-info">{UserStatus.findName(user.status)}</span></td>
                           <td className="table-action">
-                            <Link  to={`/retailer/${user.id}`}><i style={{fontSize: '30px'}} className="align-middle ion ion-ios-play mr-2" /></Link>
+                            <Link to={`/retailer/${user.id}`}><i style={{ fontSize: '30px' }} className="align-middle ion ion-ios-play mr-2" /></Link>
                           </td>
                         </tr>
                       )
@@ -113,9 +150,9 @@ function ImportCustomerPopup({ open, onCloseModal }: any) {
       .then(resp => {
         if (resp.error == 0) {
           onCloseModal()
-          alert("OK")
+          AlertUtils.showSuccess("Import thành công")
         } else {
-          alert(resp.error)
+          AlertUtils.showError(resp.msg)
         }
       })
   }
@@ -148,6 +185,10 @@ function ImportCustomerPopup({ open, onCloseModal }: any) {
                 <div className="container-fluid">
                   <div style={{ margin: '0' }} className="row">
                     <div className="col-12 col-lg-6">
+                      <div className="form-group">
+                        <label>INSEE ID</label>
+                        <input value={form.inseeId} onChange={(e: React.FormEvent<HTMLInputElement>) => { setForm({ ...form, inseeId: e.currentTarget.value }) }} type="text" className="form-control" />
+                      </div>
                       <div className="form-group">
                         <label>Sô điện thoại</label>
                         <input value={form.phone} onChange={(e: React.FormEvent<HTMLInputElement>) => { setForm({ ...form, phone: e.currentTarget.value }) }} type="text" className="form-control" />

@@ -28,9 +28,9 @@ export default class FormModel {
         });
     }
 
-    static endTopic(promotionId, topicId) {
+    static updateStatusTopic(promotionId, topicId, status) {
         return new Promise((resolve, reject) => {
-            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/promotion/lighting-quiz/end-topic?id=${promotionId}&topicId=${topicId}`, resolve, reject);
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/promotion/lighting-quiz/update-status-topic?id=${promotionId}&topicId=${topicId}&status=${status}`, resolve, reject);
         });
     }
     

@@ -10,6 +10,9 @@ import {
 import DetailLQuizTopic, { LQuizTopicModal } from "./DetailLQuizTopic";
 import LQPromotionModel from '../../src/model/LQPromotionModel';
 import * as TopicStatus from '../constant/TopicStatus';
+import FormModel from "../model/FormModel";
+import AlertUtils from "../utils/AlertUtils";
+import { AreYouSurePopup } from "../popup";
 
 function DetailLQuizPromotion() {
   let { id, topicId } = useParams()
@@ -26,12 +29,27 @@ function ListTopicLQuiz() {
   let { id } = useParams()
   const [isShowTopicModal, setIsShowTopicModal] = useState(false)
   const [promtoion, setPromotion] = useState<LQPromotion>()
+  const [isShowApprovedPopup, setIsShowApprovedPopup] = useState(false)
+  const [isShowRemovedPopup, setIsShowRemovedPopup] = useState(false)
+  const [selectedId, setSelectedId] = useState<string>()
 
   const fetchLQPromotion = () => {
     LQPromotionModel.get(id)
       .then(resp => {
         if (resp.error == 0) {
           setPromotion(resp.data)
+        }
+      })
+  }
+
+  const updateStatus = (status: number) => {
+    FormModel.updateStatusTopic(id, selectedId, status)
+      .then(resp => {
+        if (resp.error == 0) {
+          AlertUtils.showSuccess('Thành công')
+          fetchLQPromotion()
+        } else {
+          AlertUtils.showError(resp.msg)
         }
       })
   }
@@ -46,6 +64,26 @@ function ListTopicLQuiz() {
         fetchLQPromotion()
         setIsShowTopicModal(false)
       }} />
+
+      {
+        <>
+          <AreYouSurePopup open={isShowApprovedPopup} onCloseModal={() => {
+            setIsShowApprovedPopup(false)
+          }}
+            onAgree={() => {
+              updateStatus(TopicStatus.APPROVED)
+              setIsShowApprovedPopup(false)
+            }} />
+
+          <AreYouSurePopup open={isShowRemovedPopup} onCloseModal={() => {
+            setIsShowRemovedPopup(false)
+          }}
+            onAgree={() => {
+              updateStatus(TopicStatus.REMOVED)
+              setIsShowRemovedPopup(false)
+            }} />
+        </>
+      }
       <div className="card">
         <div className="card-header">
           <h5 className="card-title m-card-title">Dach sách chủ đề</h5>
@@ -65,15 +103,30 @@ function ListTopicLQuiz() {
           </thead>
           <tbody>
             {promtoion && promtoion.topics && promtoion.topics.map((topic: Topic) => {
-              console.log(topic)
+              if (topic.status == TopicStatus.REMOVED) {
+                return;
+              }
               return (
                 <tr>
                   <td>{topic.title}</td>
                   <td>{new Date(topic.timeStart).toLocaleString('vi')}</td>
                   <td>{new Date(topic.timeEnd).toLocaleString('vi')}</td>
-                  <td><span style={{backgroundColor: TopicStatus.findColor(topic.status)}} className="badge">{TopicStatus.findName(topic.status)}</span></td>
+                  <td><span style={{ backgroundColor: TopicStatus.findColor(topic.status) }}
+                    className="badge">{TopicStatus.findName(topic.status)}</span></td>
                   <td className="table-action">
-                    <Link to={`/promotion/detail/${id}/${topic.id}`}><i style={{ fontSize: '30px' }} className="align-middle ion ion-ios-play mr-2" /></Link>
+                    <Link to={`/promotion/detail/${id}/${topic.id}`}><i style={{ fontSize: '15px', margin: '0 10px' }} className="align-middle fas fa-fw fa-pen" /></Link>
+                    {topic.status == TopicStatus.INIT &&
+                      <>
+                        <i onClick={() => {
+                          setSelectedId(topic.id)
+                          setIsShowApprovedPopup(true)
+                        }} style={{ cursor: 'pointer', margin: '0 10px' }} className="ion ion-ios-globe mr-2"></i>
+                        <i onClick={() => {
+                          setSelectedId(topic.id)
+                          setIsShowRemovedPopup(true)
+                        }} style={{ cursor: 'pointer', margin: '0 10px' }} className="align-middle fas fa-fw fa-trash"></i>
+                      </>
+                    }
                   </td>
                 </tr>
               )
@@ -133,13 +186,15 @@ function TopicPopup({ open, onCloseModal }: any) {
                       <div className="form-group">
                         <label>Thời gian bắt đầu: </label>
                         <input onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                          setForm({ ...form, timeStart: e.currentTarget.valueAsNumber})
+                          let time = new Date(e.currentTarget.value).getTime();
+                          setForm({ ...form, timeStart: time })
                         }} type="datetime-local" className="form-control" />
                       </div>
                       <div className="form-group">
                         <label>Thời gian kết thúc: </label>
                         <input onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                          setForm({ ...form, timeEnd: e.currentTarget.valueAsNumber })
+                          let time = new Date(e.currentTarget.value).getTime();
+                          setForm({ ...form, timeEnd: time })
                         }} type="datetime-local" className="form-control" />
                       </div>
                     </div>

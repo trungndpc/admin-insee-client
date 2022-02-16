@@ -44,6 +44,11 @@ export default class Layout extends React.PureComponent {
                                     <i className="align-middle mr-2 fas fa-fw fa-sign-in-alt" /> <span className="align-middle">Promotion </span>
                                 </Link>
                             </li>
+                            <li className="sidebar-item">
+                                <Link to="/egagement" data-toggle="collapse" className="sidebar-link collapsed">
+                                    <i className="align-middle mr-2 fas fa-fw fa-sign-in-alt" /> <span className="align-middle">Egagements </span>
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                 </nav>

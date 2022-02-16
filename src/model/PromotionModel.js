@@ -8,15 +8,21 @@ export default class PromotionModel {
         });
     }
 
-    static list() {
+    static list(types) {
         return new Promise((resolve, reject) => {
-            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/promotion/list`, resolve, reject);
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/promotion/list?${types ? ('types=' + types) : ''}`, resolve, reject);
         });
     }
 
     static get(id) {
         return new Promise((resolve, reject) => {
             APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/promotion/get?id=${id}`, resolve, reject);
+        });
+    }
+
+    static updateStatus(id, status) {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/promotion/update-status?id=${id}&status=${status}`, resolve, reject);
         });
     }
 

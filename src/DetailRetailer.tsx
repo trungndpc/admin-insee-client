@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import UserModel from "./model/UserModel";
 import { User } from "./interface";
 import { City, District } from "./utils/ProvinceUtil";
-import { AreYouSurePopup } from "./popup";
+import { AreYouSurePopup, AreYouSureWithNotePopup } from "./popup";
 import * as UserStatus from './constant/UserStatus';
 import { getListForRetailer } from "./utils/CementUtil";
 import AlertUtils from "./utils/AlertUtils";
@@ -17,6 +17,7 @@ function DetailRetailer() {
   let { id } = useParams();
   const [isShowConfirmPopup, setIsShowConfirmPopup] = useState(false)
   const [isShowConfirmUpdatePopup, setIsShowConfirmUpdatePopup] = useState(false)
+  const [isShowConfirmWithNotePopup, setIsShowConfirmWithNotePopup] = useState(false)
   const [user, setUser] = useState<User>()
 
   const fetchUser = (id: any) => {
@@ -28,8 +29,8 @@ function DetailRetailer() {
       })
   }
 
-  const updateStatus = (id: any, status: number) => {
-    UserModel.updateStatus(id, status)
+  const updateStatus = (id: any, status: number, note: any) => {
+    UserModel.updateStatus(id, status, note)
       .then(resp => {
         if (resp.error == 0) {
           fetchUser(id);
@@ -49,6 +50,16 @@ function DetailRetailer() {
       })
   }
 
+  const onSelectCement = (cementId: number) => {
+    let products = user?.products ? user?.products : [];
+    if (products.includes(cementId)) {
+      products = products.filter((e) => e != cementId);
+    } else {
+      products.push(cementId)
+    }
+    user && setUser({ ...user, products: products })
+  }
+
   useEffect(() => {
     fetchUser(id)
   }, [])
@@ -57,7 +68,7 @@ function DetailRetailer() {
     <Layout>
       {<AreYouSurePopup open={isShowConfirmPopup} onAgree={() => {
         setIsShowConfirmPopup(false)
-        updateStatus(user?.id, UserStatus.APPROVED)
+        updateStatus(user?.id, UserStatus.APPROVED, null)
       }} onCloseModal={() => {
         setIsShowConfirmPopup(false)
       }} />}
@@ -67,6 +78,13 @@ function DetailRetailer() {
         update()
       }} onCloseModal={() => {
         setIsShowConfirmUpdatePopup(false)
+      }} />}
+
+      {<AreYouSureWithNotePopup open={isShowConfirmWithNotePopup} onAgree={(note) => {
+        setIsShowConfirmWithNotePopup(false)
+        updateStatus(user?.id, UserStatus.REJECTED, note)
+      }} onCloseModal={() => {
+        setIsShowConfirmWithNotePopup(false)
       }} />}
 
       <main className="content">
@@ -124,14 +142,14 @@ function DetailRetailer() {
                               </div>
                               <div className="form-group">
                                 <label htmlFor="inputUsername">Địa chỉ</label>
-                                <input type="text" className="form-control" value={user.address} />
+                                <input type="text" onChange={(e: React.FormEvent<HTMLInputElement>) => { setUser({ ...user, address: e.currentTarget.value }) }} className="form-control" value={user.address} />
                               </div>
                               <div className="form-group">
                                 <label htmlFor="inputUsername">Sản phẩm</label>
                                 <br />
                                 {getListForRetailer().map(value => {
                                   return (
-                                    <label style={{ display: 'inline-block', paddingRight: '20px' }} className="form-check">
+                                    <label onClick={() => { onSelectCement(Number(value.id)) }} style={{ display: 'inline-block', paddingRight: '20px' }} className="form-check">
                                       <input className="form-check-input" checked={user.products ? user.products.includes(Number(value.id)) : false} type="checkbox" />
                                       <span className="form-check-label">
                                         {value.name}
@@ -153,11 +171,14 @@ function DetailRetailer() {
                     </div>
                     {user &&
                       <div className="card-footer">
-                        {user.status != UserStatus.APPROVED &&
+                        {(user.status != UserStatus.APPROVED && user.status != UserStatus.REJECTED) &&
                           <button style={{ marginRight: '40px' }} onClick={() => { setIsShowConfirmUpdatePopup(true) }} type="submit" className="btn btn-danger m-btn-danger">Save</button>
                         }
                         {user.status == UserStatus.WAIT_APPROVAL &&
-                          <button onClick={() => { setIsShowConfirmPopup(true) }} type="submit" className="btn btn-danger m-btn-danger">Duyệt</button>
+                          <>
+                            <button onClick={() => { setIsShowConfirmPopup(true) }} type="submit" className="btn btn-danger m-btn-danger">Duyệt</button>
+                            <button onClick={() => { setIsShowConfirmWithNotePopup(true) }} style={{ marginLeft: '30px', backgroundColor: '#3e4676' }} type="submit" className="btn btn-danger m-btn-danger">Từ chối</button>
+                          </>
                         }
                         <button style={{ marginLeft: '30px', padding: '5px 30px' }} type="submit" className="btn btn-delete">Xóa</button>
                       </div>

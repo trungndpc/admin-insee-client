@@ -8,6 +8,23 @@ export default class UserModel {
         });
     }
 
+    static count() {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/user/count`, resolve, reject);
+        });
+    }
+
+    static statsUserCity() {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/user/stats-user-city`, resolve, reject);
+        });
+    }
+
+    static statsUserDate() {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/user/stats-user-date`, resolve, reject);
+        });
+    }
 
     static find(city, status, page, pageSize) {
         return new Promise((resolve, reject) => {
@@ -27,9 +44,9 @@ export default class UserModel {
         });
     }
 
-    static updateStatus(id, status) {
+    static updateStatus(id, status, note) {
         return new Promise((resolve, reject) => {
-            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/user/update-status?&uid=${id}&status=${status}`, resolve, reject);
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/user/update-status?&uid=${id}&status=${status}${note ? ('&note=' + note) : ''}`, resolve, reject);
         });
     }
 

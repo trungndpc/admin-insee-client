@@ -8,18 +8,20 @@ import { Link } from "react-router-dom";
 import { City } from "./utils/ProvinceUtil";
 import * as CementUtil from "./utils/CementUtil";
 import * as PromotionType from './constant/PromotionType'
-import { AreYouSurePopup } from "./popup";
-import AlertUtils from "./utils/AlertUtils";
 import * as PromotionStatus from './constant/PromotionStatus'
+import AlertUtils from "./utils/AlertUtils";
+import { AreYouSurePopup } from "./popup";
 
-function Promotions() {
+
+
+function Egagements() {
   const [promotionPage, setPromotionPage] = useState<Page<Promotion>>()
   const [isShowApprovedPopup, setIsShowApprovedPopup] = useState(false)
   const [isShowRemovedPopup, setIsShowRemovedPopup] = useState(false)
   const [selectedId, setSelectedId] = useState<number>()
 
   const fetchPromotionPage = () => {
-    PromotionModel.list(PromotionType.STOCK_PROMOTION_TYPE)
+    PromotionModel.list(PromotionType.LIGHTING_QUIZ_GAME_PROMOTION_TYPE)
       .then(resp => {
         if (resp.error == 0) {
           setPromotionPage(resp.data);
@@ -63,21 +65,21 @@ function Promotions() {
               setIsShowRemovedPopup(false)
             }} />
         </>
+
       }
       <main className="content">
         <div className="container-fluid">
           <div className="header">
             <h1 className="header-title">
-              Promotions
+              Egagements
             </h1>
           </div>
           <div className="row">
             <div className="col-12 col-xl-12">
               <div className="card">
                 <div className="card-header">
-                  <h5 className="card-title m-card-title">Danh sách các chiến dịch khuyến mãi</h5>
                   <div className="cart-btn-bar">
-                    <Link to={"/promotion/create"} className="btn btn-primary mr-1">Thêm chiến dịch mới</Link>
+                    <Link to={"/promotion/create"} className="btn btn-primary mr-1">Thêm chiến dịch</Link>
                   </div>
                 </div>
                 <table className="table table-striped table-hover">
@@ -108,7 +110,7 @@ function Promotions() {
                           <td><span style={{ backgroundColor: PromotionStatus.findColor(promotion.status) }}
                             className="badge badge-info">{PromotionStatus.findName(promotion.status)}</span></td>
                           <td className="table-action">
-                            <Link to={`/promotion/detail/${promotion.id}`}><i style={{ fontSize: '15px', margin: '0 10px' }}
+                            <Link to={`/promotion/detail/${promotion.id}`}><i style={{ fontSize: '15px' }}
                               className="align-middle fas fa-fw fa-pen" /></Link>
                             {promotion.status == PromotionStatus.INIT &&
                               <>
@@ -139,4 +141,4 @@ function Promotions() {
   );
 }
 
-export default Promotions;
+export default Egagements;

@@ -32,7 +32,7 @@ function ListLightingQuizForm() {
   }
 
   const endTopic = (promotionId: any, topicId: any) => {
-    FormModel.endTopic(promotionId, topicId)
+    FormModel.updateStatusTopic(promotionId, topicId, TopicStatus.DONE)
       .then(resp => {
         if (resp.error == 0) {
           fetchLQForm(promotionId, topicId)

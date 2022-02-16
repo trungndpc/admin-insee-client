@@ -26,5 +26,16 @@ export default class DateTimeUtil {
         return date.getFullYear() + "-" + date.getMonth() + 1 + "-" + date.getDate();
     }
 
+    static parseDate(str) {
+        let arr = str.split("-");
+        return new Date(arr[0], arr[1] - 1, arr[2]);
+    }
+
+    static toStringNotYear(date) {
+        let mon = date.getMonth() + 1;
+        let day = date.getDate();
+        return day + ', th' + mon;
+    }
+
 }
 

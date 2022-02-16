@@ -120,3 +120,19 @@ export interface UserFilter {
     status: number,
     search: string
 }
+export interface CountUserDashboard {
+    numUser : number,
+    numApprovedUser : number,
+    numWaitingActiveUser : number,
+    numWaitingReviewUser : number,
+}
+
+export interface UserDateMetric {
+    date: string,
+    total: number
+}
+
+export interface UserCityMetric {
+    city: number,
+    total: number
+}

@@ -27,6 +27,7 @@ import ListLightingQuizForm from './ListLightingQuizForm';
 
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
+import Egagements from './Egagements';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -41,6 +42,7 @@ ReactDOM.render(
         <Route path="/post" element={<Posts />} />
         <Route path="/promotion/create" element={<CreatePromotion />}/>
         <Route path="/promotion" element={<Promotions />} />
+        <Route path="/egagement" element={<Egagements />} />
         <Route path="/form/list/:id/:topicId" element={<ListLightingQuizForm />} />
         <Route path="/promotion/detail/:id" element={<DetailPromotion />} />
         <Route path="/promotion/detail/:id/:topicId" element={<DetailPromotion />} />

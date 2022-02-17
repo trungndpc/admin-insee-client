@@ -152,7 +152,6 @@ export function LQuizTopicModal({ open, onCloseModal, data }: any) {
       }}
     >
       <div className={owlClass}>
-        {console.log(question)}
         <div className={`${owlClass}__wrapper`}>
           <div className={`${owlClass}__wrapper__title`}>Cẩu hỏi: </div>
           <p className={`${owlClass}__wrapper__desc`}>

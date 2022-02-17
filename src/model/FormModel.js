@@ -34,9 +34,9 @@ export default class FormModel {
         });
     }
     
-    static updateStatus(formId, status) {
+    static updateStatus(formId, status, note) {
         return new Promise((resolve, reject) => {
-            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/form/update-status?id=${formId}&status=${status}`, resolve, reject);
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/form/update-status?id=${formId}&status=${status}${note? ('&note=' + note) : ''}`, resolve, reject);
         });
     }
 

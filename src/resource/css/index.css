@@ -70,3 +70,35 @@
     width: 150px;
     height: 80px;
 }
+
+.previews-img-container {
+    display: flex;
+    flex-flow: wrap;
+}
+
+.previews-img-container .item {
+    display: inline-flex;
+    width: 25%;
+    cursor: pointer;
+    margin: 10px;
+    border: 1px solid;
+    padding: 10px;
+}
+
+.previews-img-container .item img {
+    display: block;
+    overflow: hidden;
+}
+
+.btn-x-card {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-weight: 600;
+    background-color: #ccc;
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+}

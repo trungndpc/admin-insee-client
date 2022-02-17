@@ -2,21 +2,24 @@ import "react-responsive-modal/styles.css";
 import Modal from "react-responsive-modal";
 import '../../src/popup/styles.scss'
 import { useEffect, useReducer, useState } from "react";
-import { StockForm } from "../interface";
+import { ImgRealtimePhoto, StockForm } from "../interface";
 import { City, District } from "../utils/ProvinceUtil";
-import { AreYouSurePopup } from "../popup";
+import { AreYouSurePopup, AreYouSureWithNotePopup } from "../popup";
 import FormModel from "../model/FormModel";
 import AlertUtils from "../utils/AlertUtils";
 import * as StockFormStatus from '../constant/StockFormStatus';
+import { SendGiftPopup } from '../gift/popup';
 
 function DetailStockForm({ data }: any) {
   const [isShowImgModel, setIsShowImgModel] = useState(false)
   const [isShowApporvedPopup, setIsShowApporvedPopup] = useState(false)
   const [isRejectPopup, setIsRejectPopup] = useState(false)
   const [form, setForm] = useState<StockForm>();
+  const [selectedJSONImg, setSelectedJSONImg] = useState<ImgRealtimePhoto>()
+  const [isShowGiftPopup, setIsShowGiftPopup] = useState(false)
 
-  const updateStatus = (id: any, status: number) => {
-    FormModel.updateStatus(id, status)
+  const updateStatus = (id: any, status: number, note: any) => {
+    FormModel.updateStatus(id, status, note)
       .then(resp => {
         if (resp.error == 0) {
           AlertUtils.showSuccess("Thành công!")
@@ -68,18 +71,21 @@ function DetailStockForm({ data }: any) {
                               <label htmlFor="inputUsername">Địa chỉ</label>
                               <input type="text" className="form-control" value={`${form.user.address} - ${District.getName(form.user.districtId)} - ${City.getName(form.user.cityId)} `} />
                             </div>
-                            <div className="form-group">
-                              <label htmlFor="inputUsername">Thời gian</label>
-                              <input type="text" className="form-control" value={new Date(form.jsonImg.time).toLocaleString('vi')} />
-                            </div>
-                            <div className="form-group">
-                              <label htmlFor="inputUsername">Vị trí</label>
-                              <input type="text" className="form-control" value={JSON.stringify(form.jsonImg.location)} />
-                            </div>
                           </div>
                           <div className="col-md-8">
                             <div className="text-center">
-                              <img onClick={() => { setIsShowImgModel(true) }} src={form.jsonImg.url} className="img-responsive mt-2" style={{ maxHeight: '500px', maxWidth: '500px', cursor: 'pointer' }} />
+                              <div className="previews-img-container">
+                                {form && form.jsonImgs.map((jsonImg: ImgRealtimePhoto) => {
+                                  return (
+                                    <div onClick={() => {
+                                      setSelectedJSONImg(jsonImg)
+                                      setIsShowImgModel(true)
+                                    }} className="item">
+                                      <img src={jsonImg.url} />
+                                    </div>
+                                  )
+                                })}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -93,17 +99,20 @@ function DetailStockForm({ data }: any) {
                         <button onClick={() => setIsShowApporvedPopup(true)} className="btn btn-danger m-btn-danger">Duyệt</button>
                         <AreYouSurePopup open={isShowApporvedPopup} onCloseModal={() => { setIsShowApporvedPopup(false) }}
                           onAgree={() => {
-                            updateStatus(form?.id, StockFormStatus.APPROVED)
+                            updateStatus(form?.id, StockFormStatus.APPROVED, null)
                             setIsShowApporvedPopup(false)
                           }} />
 
                         <button onClick={() => setIsRejectPopup(true)} style={{ marginLeft: '30px', padding: '5px 30px' }} className="btn btn-delete">Không duyệt</button>
-                        <AreYouSurePopup open={isRejectPopup} onCloseModal={() => { setIsRejectPopup(false) }}
-                          onAgree={() => {
-                            updateStatus(form?.id, StockFormStatus.REJECTED)
+                        <AreYouSureWithNotePopup open={isRejectPopup} onCloseModal={() => { setIsRejectPopup(false) }}
+                          onAgree={(note) => {
+                            updateStatus(form?.id, StockFormStatus.REJECTED, note)
                             setIsRejectPopup(false)
                           }} />
                       </>
+                    }
+                    {form?.status == StockFormStatus.APPROVED &&
+                      <button onClick={() => setIsShowGiftPopup(true)} className="btn btn-danger m-btn-danger">Gửi quà</button>
                     }
 
                   </div>
@@ -112,9 +121,13 @@ function DetailStockForm({ data }: any) {
             </div>
           </div>
         </div>
-        {isShowImgModel &&
-          <ImagePopup open={isShowImgModel} onCloseModal={() => { setIsShowImgModel(false) }} url={form?.jsonImg.url} />
-        }
+        <SendGiftPopup open={isShowGiftPopup} onCloseModal={() => { setIsShowGiftPopup(false) }} onAgree={(form) => {
+          console.log(form)
+          setIsShowGiftPopup(false)
+        }} />
+        <ImagePopup open={isShowImgModel}
+          onCloseModal={() => { setIsShowImgModel(false) }}
+          url={selectedJSONImg?.url} />
       </div>
     </main>
   );
@@ -142,7 +155,7 @@ export function ImagePopup({ open, onCloseModal, url }: any) {
     >
       <div className={owlClass}>
         <div className={`${owlClass}__wrapper`}>
-          <img src={url} alt="" />
+          <img style={{ maxHeight: '70vh', maxWidth: '70vw' }} src={url} alt="" />
         </div>
         <div className={`${owlClass}__group-btn`}>
           <div

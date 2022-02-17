@@ -60,6 +60,7 @@ export interface Form {
     status: number,
     type: number,
     user: User,
+    time: number
     promotion: Promotion
 }
 
@@ -75,17 +76,17 @@ export interface ImgRealtimePhoto {
 }
 
 export interface StockForm extends Form {
-    jsonImg: ImgRealtimePhoto
+    jsonImgs: Array<ImgRealtimePhoto>
 }
 
 export interface TopicLightingQuizForm {
     topicId: string,
     timeStart: number,
     timeEnd: number,
-} 
+}
 
 export interface LightingQuizForm extends Form {
-    point : number,
+    point: number,
     topicId: string,
     jsonDetail: TopicLightingQuizForm
 }
@@ -103,11 +104,11 @@ export interface Question {
 }
 
 export interface Topic {
-    id : string;
-    title : string;
-    questions:  Array<Question>
-    timeStart : number;
-    timeEnd : number;
+    id: string;
+    title: string;
+    questions: Array<Question>
+    timeStart: number;
+    timeEnd: number;
     status: number;
 }
 
@@ -121,10 +122,10 @@ export interface UserFilter {
     search: string
 }
 export interface CountUserDashboard {
-    numUser : number,
-    numApprovedUser : number,
-    numWaitingActiveUser : number,
-    numWaitingReviewUser : number,
+    numUser: number,
+    numApprovedUser: number,
+    numWaitingActiveUser: number,
+    numWaitingReviewUser: number,
 }
 
 export interface UserDateMetric {
@@ -135,4 +136,18 @@ export interface UserDateMetric {
 export interface UserCityMetric {
     city: number,
     total: number
+}
+
+export interface FormGift {
+    type: number,
+    totalValue: number
+    cardPhones: Array<CardPhoneGift>
+}
+
+export interface CardPhoneGift {
+    id: number,
+    network: number,
+    value: number,
+    seri: string,
+    code: string
 }

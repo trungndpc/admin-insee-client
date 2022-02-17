@@ -151,3 +151,20 @@ export interface CardPhoneGift {
     seri: string,
     code: string
 }
+
+
+export interface Broadcast {
+    id: number,
+    name: string,
+    timeStart: number,
+    status: number,
+    type: number,
+    cityIds: Array<number>,
+    districtIds: Array<number>,
+    postId: number,
+    seen: number,
+    click: number,
+    totalUids: number,
+    totalUidsAfterBuildUser: number,
+    totalUidsSuccessSend: number
+}

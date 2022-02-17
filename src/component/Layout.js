@@ -8,7 +8,7 @@ export default class Layout extends React.PureComponent {
             <div className="wrapper">
                 <nav id="sidebar" className="sidebar">
                     <a className="sidebar-brand">
-                        <img style={{ height: '30px' }} src="https://ximanginsee.gapit.com.vn/html/images/logo.png" />
+                        {/* <img style={{ height: '30px' }} src="https://ximanginsee.gapit.com.vn/html/images/logo.png" /> */}
                     </a>
                     <div className="sidebar-content">
                         <div className="sidebar-user">
@@ -47,6 +47,11 @@ export default class Layout extends React.PureComponent {
                             <li className="sidebar-item">
                                 <Link to="/egagement" data-toggle="collapse" className="sidebar-link collapsed">
                                     <i className="align-middle mr-2 fas fa-fw fa-sign-in-alt" /> <span className="align-middle">Egagements </span>
+                                </Link>
+                            </li>
+                            <li className="sidebar-item">
+                                <Link to="/broadcast" data-toggle="collapse" className="sidebar-link collapsed">
+                                    <i className="align-middle mr-2 fas fa-fw fa-sign-in-alt" /> <span className="align-middle">Broadcast</span>
                                 </Link>
                             </li>
                         </ul>

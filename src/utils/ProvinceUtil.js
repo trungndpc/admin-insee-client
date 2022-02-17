@@ -77,4 +77,18 @@ export class District {
         rs = rs.sort(compare);
         return rs;
     }
+
+    static getOption(listCityIds) {
+        let options = []
+        for (const cityId of listCityIds) {
+            let lstDistrict = this.getList(cityId)
+            if (lstDistrict) {
+                for (const ldistrict of lstDistrict) {
+                    let option = { value: ldistrict.key, label: ldistrict.value }
+                    options.push(option);
+                }
+            }
+        }
+        return options;
+    }
 }

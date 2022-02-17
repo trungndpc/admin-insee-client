@@ -28,6 +28,8 @@ import ListLightingQuizForm from './ListLightingQuizForm';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 import Egagements from './Egagements';
+import CreateBroadcast from './CreateBroadcast';
+import BroadcastPage from './BroadcastPage';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -40,9 +42,12 @@ ReactDOM.render(
         <Route path="/post/create" element={<CreatePost />} />
         <Route path="/post/detail/:id" element={<UpdatePost />} />
         <Route path="/post" element={<Posts />} />
-        <Route path="/promotion/create" element={<CreatePromotion />}/>
+        <Route path="/promotion/create" element={<CreatePromotion />} />
         <Route path="/promotion" element={<Promotions />} />
         <Route path="/egagement" element={<Egagements />} />
+        <Route path="/broadcast" element={<BroadcastPage />} />
+        <Route path="/broadcast/create" element={<CreateBroadcast />} />
+
         <Route path="/form/list/:id/:topicId" element={<ListLightingQuizForm />} />
         <Route path="/promotion/detail/:id" element={<DetailPromotion />} />
         <Route path="/promotion/detail/:id/:topicId" element={<DetailPromotion />} />

@@ -8,7 +8,7 @@ export default class Layout extends React.PureComponent {
             <div className="wrapper">
                 <nav id="sidebar" className="sidebar">
                     <a className="sidebar-brand">
-                        {/* <img style={{ height: '30px' }} src="https://ximanginsee.gapit.com.vn/html/images/logo.png" /> */}
+                        <img style={{ height: '30px' }} src="https://ximanginsee.gapit.com.vn/html/images/logo.png" />
                     </a>
                     <div className="sidebar-content">
                         <div className="sidebar-user">

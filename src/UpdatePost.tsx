@@ -8,9 +8,10 @@ import UploadFileUtil from "./utils/UploadFileUtil";
 import PostModel from "./model/PostModel";
 import Select from 'react-select'
 import { useParams } from "react-router-dom";
-import { City } from '../src/utils/ProvinceUtil'
+import { City, District } from '../src/utils/ProvinceUtil'
 import DateTimeUtil from "./utils/DateTimeUtil";
 import PromotionModel from "./model/PromotionModel";
+import AlertUtils from "./utils/AlertUtils";
 
 const locationOptions = City.getOptions()
 function UpdatePost() {
@@ -29,7 +30,6 @@ function UpdatePost() {
         setLstPromotion(resp.data)
       })
   }
-
 
   const fetchPost = () => {
     PostModel.get(id)
@@ -79,7 +79,11 @@ function UpdatePost() {
 
     PostModel.create(postForm)
       .then(resp => {
-        console.log(resp)
+        if (resp.error == 0) {
+          AlertUtils.showSuccess('Thành công')
+        } else {
+          AlertUtils.showError(resp.msg)
+        }
       })
   }
 
@@ -139,12 +143,12 @@ function UpdatePost() {
                       </div>
                     </div>
                     <div className="form-group row">
-                      <label className="col-form-label col-sm-2 text-sm-right">Locations</label>
-                      <div className="col-sm-10">
+                      <label className="col-form-label col-sm-2 text-sm-right">City</label>
+                      <div className="col-sm-4">
                         <Select
                           isClearable={true}
                           isMulti={true}
-                          value={post.locations && post.locations.map((id: number) => {
+                          value={post.cityIds && post.cityIds.map((id: number) => {
                             return {
                               value: id,
                               label: City.getName(id)
@@ -152,24 +156,46 @@ function UpdatePost() {
                           })}
                           onChange={(e) => {
                             let list = e.map((x: any) => Number(x.value));
-                            setPost({ ...post, locations: list })
+                            setPost({ ...post, cityIds: list })
                           }}
                           options={locationOptions}
+                        />
+                      </div>
+                      <label className="col-form-label col-sm-2 text-sm-right">District</label>
+                      <div className="col-sm-4">
+                        <Select
+                          isClearable={true}
+                          isMulti={true}
+                          value={post.districtIds && post.districtIds.map((id: number) => {
+                            return {
+                              value: id,
+                              label: District.getName(id)
+                            }
+                          })}
+                          onChange={(e) => {
+                            let list = e.map((x: any) => Number(x.value));
+                            setPost({ ...post, districtIds: list })
+                          }}
+                          options={(post && post.cityIds && post.cityIds.length > 0) ? District.getOption(post.cityIds) : []}
                         />
                       </div>
                     </div>
                     <div className="form-group row">
                       <label className="col-form-label col-sm-2 text-sm-right">Time Start</label>
                       <div className="form-group col-md-4">
-                        <input defaultValue={post.timeStart && DateTimeUtil.toStringForSysten(post.timeStart)} onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                          setPost({ ...post, timeStart: Number(e.currentTarget.valueAsDate?.getTime()) })
-                        }} type="date" className="form-control" />
+                        <input value={post.timeStart ? new Date(post.timeStart).toISOString().slice(0, 10) : ''}
+                          onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                            let time = new Date(e.currentTarget.value).getTime();
+                            setPost({ ...post, timeStart: time })
+                          }} type="date" className="form-control" />
                       </div>
                       <label className="col-form-label col-sm-2 text-sm-right">Time End</label>
                       <div className="form-group col-md-4">
-                        <input defaultValue={post.timeEnd && DateTimeUtil.toStringForSysten(post.timeEnd)} onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                          setPost({ ...post, timeEnd: Number(e.currentTarget.valueAsDate?.getTime()) })
-                        }} type="date" className="form-control" />
+                        <input value={post.timeEnd ? new Date(post.timeEnd).toISOString().slice(0, 10) : ''}
+                          onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                            let time = new Date(e.currentTarget.value).getTime();
+                            setPost({ ...post, timeEnd: time })
+                          }} type="date" className="form-control" />
                       </div>
                     </div>
                     <div className="form-group row">
@@ -187,7 +213,7 @@ function UpdatePost() {
                     <div className="form-group row">
                       <div className="col-sm-10 ml-sm-auto">
                         {errorMsg && <p style={{ color: 'red' }}>{errorMsg}</p>}
-                        <div onClick={() => { submit() }} className="btn btn-primary">Update</div>
+                        <div onClick={() => { submit() }} className="btn btn-primary">Save</div>
                       </div>
                     </div>
                   </form>

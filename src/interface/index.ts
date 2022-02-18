@@ -29,7 +29,8 @@ export interface Post {
     summary: string,
     status: number,
     promotionId: number,
-    locations: Array<number>
+    cityIds: Array<number>
+    districtIds: Array<number>
     timeStart: number,
     timeEnd: number
 }
@@ -49,7 +50,8 @@ export interface Promotion {
     timeStart: number,
     timeEnd: number,
     postId: number,
-    locations: Array<number>,
+    cityIds: Array<number>,
+    districtIds: Array<number>,
     cements: Array<number>
 }
 
@@ -167,4 +169,5 @@ export interface Broadcast {
     totalUids: number,
     totalUidsAfterBuildUser: number,
     totalUidsSuccessSend: number
+    userIds: Array<number>
 }

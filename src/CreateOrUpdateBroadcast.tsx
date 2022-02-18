@@ -10,12 +10,12 @@ import PostModel from "./model/PostModel";
 import BroadcastModel from "./model/BroadcastModel";
 import AlertUtils from "./utils/AlertUtils";
 import { AreYouSurePopup } from "./popup";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, useParams } from 'react-router-dom';
+import moment from 'moment';
 
 const cityOptions = City.getOptions()
-function CreateBroadcast() {
-
+function CreateOrUpdateBroadcast() {
+  let { id } = useParams();
   const [form, setForm] = useState<Broadcast>({} as Broadcast)
   const [errorMsg, setErrorMsg] = useState<string>()
   const [lstPost, setLstPost] = useState<Array<Post>>()
@@ -27,6 +27,14 @@ function CreateBroadcast() {
       .then(resp => {
         if (resp.error == 0) {
           setLstPost(resp.data)
+        }
+      })
+  }
+  const fetchBroadcast = () => {
+    BroadcastModel.get(id)
+      .then(resp => {
+        if (resp.error == 0) {
+          setForm(resp.data)
         }
       })
   }
@@ -55,20 +63,34 @@ function CreateBroadcast() {
 
   }
 
-  const createBroadcast = () => {
-    BroadcastModel.create(form)
-      .then(resp => {
-        if (resp.error == 0) {
-          navigate('/broadcast')
-          AlertUtils.showSuccess('Thành công')
-        } else {
-          AlertUtils.showError(resp.msg)
-        }
-      })
+  const createOrUpdateBroadcast = () => {
+    if (id) {
+      BroadcastModel.update(id, form)
+        .then(resp => {
+          if (resp.error == 0) {
+            AlertUtils.showSuccess('Thành công')
+          } else {
+            AlertUtils.showError(resp.msg)
+          }
+        })
+    } else {
+      BroadcastModel.create(form)
+        .then(resp => {
+          if (resp.error == 0) {
+            navigate('/broadcast')
+            AlertUtils.showSuccess('Thành công')
+          } else {
+            AlertUtils.showError(resp.msg)
+          }
+        })
+    }
   }
 
 
   useEffect(() => {
+    if (id) {
+      fetchBroadcast()
+    }
     fetchGetListPost()
   }, [])
 
@@ -77,7 +99,7 @@ function CreateBroadcast() {
       <AreYouSurePopup open={isShowPopup} onCloseModal={() => {
         setIsShowPopup(false)
       }} onAgree={() => {
-        createBroadcast()
+        createOrUpdateBroadcast()
         setIsShowPopup(false)
       }} />
       <main className="content">
@@ -91,20 +113,19 @@ function CreateBroadcast() {
             <div className="col-md-12">
               <div className="card">
                 <div className="card-header">
-                  {/* <h5 className="card-title">Thông tin chương trình khuyến mãi</h5> */}
                 </div>
                 <div className="card-body">
                   <form>
                     <div className="form-row">
                       <div className="form-group col-md-8">
                         <label htmlFor="inputEmail4">Title</label>
-                        <input onChange={(e: React.FormEvent<HTMLInputElement>) => { setForm({ ...form, name: e.currentTarget.value }) }} className="form-control" />
+                        <input value={form.name} onChange={(e: React.FormEvent<HTMLInputElement>) => { setForm({ ...form, name: e.currentTarget.value }) }} className="form-control" />
                       </div>
                     </div>
                     <div className="form-row">
                       <div className="form-group col-md-4">
                         <label htmlFor="inputState">Type</label>
-                        <select onChange={(e: React.FormEvent<HTMLSelectElement>) => { setForm({ ...form, type: Number(e.currentTarget.value) }) }} id="inputState" className="form-control">
+                        <select value={form.type} onChange={(e: React.FormEvent<HTMLSelectElement>) => { setForm({ ...form, type: Number(e.currentTarget.value) }) }} id="inputState" className="form-control">
                           <option selected>Choose...</option>
                           <option value={BroadcastType.REQUEST_REGISTER_ZNS}>{BroadcastType.findName(BroadcastType.REQUEST_REGISTER_ZNS)}</option>
                           <option value={BroadcastType.BROADCAST_NORMAL_POST}>{BroadcastType.findName(BroadcastType.BROADCAST_NORMAL_POST)}</option>
@@ -114,7 +135,7 @@ function CreateBroadcast() {
                     <div className="form-row">
                       <div className="form-group col-md-4">
                         <label htmlFor="inputState">Time Start</label>
-                        <input onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                        <input value={moment(new Date(form.timeStart)).format("YYYY-MM-DDTkk:mm")} onChange={(e: React.FormEvent<HTMLInputElement>) => {
                           let time = new Date(e.currentTarget.value).getTime();
                           setForm({ ...form, timeStart: time })
                         }} type="datetime-local" className="form-control" />
@@ -122,7 +143,7 @@ function CreateBroadcast() {
                       {form.type == BroadcastType.BROADCAST_NORMAL_POST &&
                         <div className="form-group col-md-4">
                           <label htmlFor="inputState">Bài viết</label>
-                          <select onChange={(e: React.FormEvent<HTMLSelectElement>) => { setForm({ ...form, postId: Number(e.currentTarget.value) }) }} id="inputState" className="form-control">
+                          <select value={form.postId} onChange={(e: React.FormEvent<HTMLSelectElement>) => { setForm({ ...form, postId: Number(e.currentTarget.value) }) }} id="inputState" className="form-control">
                             <option selected>Choose...</option>
                             {lstPost && lstPost.map((post) => {
                               return (
@@ -139,6 +160,12 @@ function CreateBroadcast() {
                         <Select
                           isClearable={true}
                           isMulti={true}
+                          value={form.cityIds && form.cityIds.map((id: number) => {
+                            return {
+                              value: id,
+                              label: City.getName(id)
+                            }
+                          })}
                           onChange={(e) => {
                             let list = e.map((x: any) => Number(x.value));
                             setForm({ ...form, cityIds: list })
@@ -147,10 +174,16 @@ function CreateBroadcast() {
                         />
                       </div>
                       <div className="form-group col-md-4">
-                        <label htmlFor="inputState">Location</label>
+                        <label htmlFor="inputState">District</label>
                         <Select
                           isClearable={true}
                           isMulti={true}
+                          value={form.districtIds && form.districtIds.map((id: number) => {
+                            return {
+                              value: id,
+                              label: District.getName(id)
+                            }
+                          })}
                           onChange={(e) => {
                             let list = e.map((x: any) => Number(x.value));
                             setForm({ ...form, districtIds: list })
@@ -164,7 +197,7 @@ function CreateBroadcast() {
                       if (isValidForm()) {
                         setIsShowPopup(true)
                       }
-                    }} className="btn btn-primary">Submit</div>
+                    }} className="btn btn-primary">Save</div>
                   </form>
                 </div>
               </div>
@@ -177,4 +210,4 @@ function CreateBroadcast() {
   );
 }
 
-export default CreateBroadcast;
+export default CreateOrUpdateBroadcast;

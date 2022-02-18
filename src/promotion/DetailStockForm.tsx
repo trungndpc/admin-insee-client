@@ -2,13 +2,14 @@ import "react-responsive-modal/styles.css";
 import Modal from "react-responsive-modal";
 import '../../src/popup/styles.scss'
 import { useEffect, useReducer, useState } from "react";
-import { ImgRealtimePhoto, StockForm } from "../interface";
+import { FormGift, ImgRealtimePhoto, StockForm } from "../interface";
 import { City, District } from "../utils/ProvinceUtil";
 import { AreYouSurePopup, AreYouSureWithNotePopup } from "../popup";
 import FormModel from "../model/FormModel";
 import AlertUtils from "../utils/AlertUtils";
 import * as StockFormStatus from '../constant/StockFormStatus';
 import { SendGiftPopup } from '../gift/popup';
+import GiftModel from "../model/GiftModel";
 
 function DetailStockForm({ data }: any) {
   const [isShowImgModel, setIsShowImgModel] = useState(false)
@@ -35,6 +36,18 @@ function DetailStockForm({ data }: any) {
       .then(resp => {
         if (resp.error == 0) {
           setForm(resp.data)
+        }
+      })
+  }
+
+  const sendGift = (formGift: FormGift) => {
+    GiftModel.create(form?.id, formGift)
+      .then(resp => {
+        if (resp.error == 0) {
+          AlertUtils.showSuccess('Thành công')
+          fetchForm()
+        } else {
+          AlertUtils.showError(resp.msg)
         }
       })
   }
@@ -122,7 +135,7 @@ function DetailStockForm({ data }: any) {
           </div>
         </div>
         <SendGiftPopup open={isShowGiftPopup} onCloseModal={() => { setIsShowGiftPopup(false) }} onAgree={(form) => {
-          console.log(form)
+          sendGift(form)
           setIsShowGiftPopup(false)
         }} />
         <ImagePopup open={isShowImgModel}

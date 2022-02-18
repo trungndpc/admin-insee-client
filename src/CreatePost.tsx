@@ -5,13 +5,16 @@ import Select from 'react-select'
 import INSEEEditor from "./component/INSEEEditor";
 import { useEffect, useRef, useState } from "react";
 import { Post } from "./interface";
-import { City } from '../src/utils/ProvinceUtil'
+import { City, District } from '../src/utils/ProvinceUtil'
 import UploadFileUtil from "./utils/UploadFileUtil";
 import PostModel from "./model/PostModel";
 import PromotionModel from "./model/PromotionModel";
+import { useNavigate } from 'react-router-dom';
+import AlertUtils from "./utils/AlertUtils";
 
 const locationOptions = City.getOptions()
 function CreatePost() {
+  const navigate = useNavigate()
   const inputImgRef = useRef<HTMLInputElement | null>(null);
   const editorRef = useRef<any>(null);
   const [previewImg, setPreviewImg] = useState(null as any);
@@ -39,10 +42,15 @@ function CreatePost() {
       setErrorMsg('Upload file thất bại')
       return;
     }
+
     PostModel.create({ ...postForm, cover: resp.data, content: content })
       .then(resp => {
-        console.log(resp)
-        window.location.href = "/post"
+        if (resp.error == 0) {
+          navigate("/post")
+          AlertUtils.showSuccess('Thành công')
+        } else {
+          AlertUtils.showError(resp.msg)
+        }
       })
   }
 
@@ -101,16 +109,28 @@ function CreatePost() {
                       </div>
                     </div>
                     <div className="form-group row">
-                      <label className="col-form-label col-sm-2 text-sm-right">Locations</label>
-                      <div className="col-sm-10">
+                      <label className="col-form-label col-sm-2 text-sm-right">Citys</label>
+                      <div className="form-group col-sm-4">
                         <Select
                           isClearable={true}
                           isMulti={true}
                           onChange={(e) => {
                             let list = e.map((x: any) => Number(x.value));
-                            setPostForm({ ...postForm, locations: list })
+                            setPostForm({ ...postForm, cityIds: list })
                           }}
                           options={locationOptions}
+                        />
+                      </div>
+                      <label className="col-form-label col-sm-2 text-sm-right">Districts</label>
+                      <div className="form-group col-sm-4">
+                        <Select
+                          isClearable={true}
+                          isMulti={true}
+                          onChange={(e) => {
+                            let list = e.map((x: any) => Number(x.value));
+                            setPostForm({ ...postForm, districtIds: list })
+                          }}
+                          options={(postForm && postForm.cityIds && postForm.cityIds.length > 0) ? District.getOption(postForm.cityIds) : []}
                         />
                       </div>
                     </div>

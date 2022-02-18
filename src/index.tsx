@@ -19,7 +19,7 @@ import CreatePost from './CreatePost';
 import reportWebVitals from './reportWebVitals';
 import Posts from './Posts';
 import UpdatePost from './UpdatePost';
-import CreatePromotion from './CreatePromotion';
+import CreateOrUpdatePromotion from './CreateOrUpdatePromotion';
 import Promotions from './Promotions';
 import DetailPromotion from './DetailPromotion';
 import DetailForm from '../src/DetailForm';
@@ -28,8 +28,9 @@ import ListLightingQuizForm from './ListLightingQuizForm';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/slide.css';
 import Egagements from './Egagements';
-import CreateBroadcast from './CreateBroadcast';
+import CreateOrUpdateBroadcast from './CreateOrUpdateBroadcast';
 import BroadcastPage from './BroadcastPage';
+import DetailBroadcast from './DetailBroadcast';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -42,12 +43,14 @@ ReactDOM.render(
         <Route path="/post/create" element={<CreatePost />} />
         <Route path="/post/detail/:id" element={<UpdatePost />} />
         <Route path="/post" element={<Posts />} />
-        <Route path="/promotion/create" element={<CreatePromotion />} />
+        <Route path="/promotion/create-or-update" element={<CreateOrUpdatePromotion />} />
+        <Route path="/promotion/create-or-update/:id" element={<CreateOrUpdatePromotion />} />
         <Route path="/promotion" element={<Promotions />} />
         <Route path="/egagement" element={<Egagements />} />
         <Route path="/broadcast" element={<BroadcastPage />} />
-        <Route path="/broadcast/create" element={<CreateBroadcast />} />
-
+        <Route path="/broadcast/create-or-update" element={<CreateOrUpdateBroadcast />} />
+        <Route path="/broadcast/create-or-update/:id" element={<CreateOrUpdateBroadcast />} />
+        <Route path="/broadcast/detail/:id" element={<DetailBroadcast />} />
         <Route path="/form/list/:id/:topicId" element={<ListLightingQuizForm />} />
         <Route path="/promotion/detail/:id" element={<DetailPromotion />} />
         <Route path="/promotion/detail/:id/:topicId" element={<DetailPromotion />} />

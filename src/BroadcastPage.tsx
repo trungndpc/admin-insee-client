@@ -78,7 +78,7 @@ function BroadcastPage() {
               <div className="card">
                 <div className="card-header">
                   <div className="cart-btn-bar">
-                    <Link to={"/broadcast/create"} className="btn btn-primary mr-1">Tạo broadcast</Link>
+                    <Link to={"/broadcast/create-or-update"} className="btn btn-primary mr-1">Tạo broadcast</Link>
                   </div>
                 </div>
                 <table className="table table-striped table-hover">
@@ -110,9 +110,13 @@ function BroadcastPage() {
                             className="badge badge-info">{BroadcastStatus.findName(broadcast.status)}</span>
                           </td>
                           <td className="table-action">
-                            <Link to={`/broadcast/${broadcast.id}`}><i style={{ fontSize: '15px', margin: '0 10px' }} className="align-middle fas fa-fw fa-pen" /></Link>
+                            {broadcast.status == BroadcastStatus.DONE &&
+                              <Link to={`/broadcast/detail/${broadcast.id}`}><i style={{ fontSize: '15px' }}
+                                className="ion ion-ios-open mr-2" /></Link>
+                            }
                             {broadcast.status == BroadcastStatus.INIT &&
                               <>
+                                <Link to={`/broadcast/create-or-update/${broadcast.id}`}><i style={{ fontSize: '15px', margin: '0 10px' }} className="align-middle fas fa-fw fa-pen" /></Link>
                                 <i onClick={() => {
                                   setSelectedId(broadcast.id)
                                   setIsShowApprovedPopup(true)

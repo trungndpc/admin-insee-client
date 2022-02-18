@@ -88,7 +88,7 @@ function ListTopicLQuiz() {
         <div className="card-header">
           <h5 className="card-title m-card-title">Dach sách chủ đề</h5>
           <div className="cart-btn-bar">
-            <button onClick={() => { setIsShowTopicModal(true) }} className="btn btn-primary mr-1">Thêm chủ đề mới</button>
+            <button onClick={() => { setIsShowTopicModal(true) }} className="btn btn-primary mr-1">Thêm chủ đề </button>
           </div>
         </div>
         <table className="table table-striped table-hover">
@@ -114,6 +114,7 @@ function ListTopicLQuiz() {
                   <td><span style={{ backgroundColor: TopicStatus.findColor(topic.status) }}
                     className="badge">{TopicStatus.findName(topic.status)}</span></td>
                   <td className="table-action">
+                    <Link to={"/form/list/" + id + "/" + topic.id}><i style={{ fontSize: '15px' }} className="ion ion-ios-open mr-2" /></Link>
                     <Link to={`/promotion/detail/${id}/${topic.id}`}><i style={{ fontSize: '15px', margin: '0 10px' }} className="align-middle fas fa-fw fa-pen" /></Link>
                     {topic.status == TopicStatus.INIT &&
                       <>

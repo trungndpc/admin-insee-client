@@ -5,7 +5,7 @@ import PromotionModel from "./model/PromotionModel";
 import { useEffect, useState } from "react";
 import { Page, Promotion } from "./interface";
 import { Link } from "react-router-dom";
-import { City } from "./utils/ProvinceUtil";
+import { City, District } from "./utils/ProvinceUtil";
 import * as CementUtil from "./utils/CementUtil";
 import * as PromotionType from './constant/PromotionType'
 import { AreYouSurePopup } from "./popup";
@@ -77,7 +77,7 @@ function Promotions() {
                 <div className="card-header">
                   <h5 className="card-title m-card-title">Danh sách các chiến dịch khuyến mãi</h5>
                   <div className="cart-btn-bar">
-                    <Link to={"/promotion/create"} className="btn btn-primary mr-1">Thêm chiến dịch mới</Link>
+                    <Link to={"/promotion/create-or-update"} className="btn btn-primary mr-1">Thêm chiến dịch</Link>
                   </div>
                 </div>
                 <table className="table table-striped table-hover">
@@ -86,8 +86,8 @@ function Promotions() {
                       <th>Id</th>
                       <th>Title</th>
                       <th>Type</th>
-                      <th>Locations</th>
-                      <th>Cements</th>
+                      <th>City</th>
+                      <th>District</th>
                       <th>Status</th>
                       <th>Actions</th>
                     </tr>
@@ -100,18 +100,21 @@ function Promotions() {
                           <td>{promotion.title}</td>
                           <td>{promotion.type == 20 ? 'Stock Promotion' : 'Lighting Quiz Game'}</td>
                           <td>
-                            {promotion.locations.map((l: number) => City.getName(l)).join(", ")}
+                            {promotion.cityIds && promotion.cityIds.map((l: number) => City.getName(l)).join(", ")}
                           </td>
                           <td>
-                            {promotion.cements.map((l: number) => CementUtil.findById(l)?.name).join(", ")}
+                            {promotion.districtIds && promotion.districtIds.map((l: number) => District.getName(l)).join(", ")}
                           </td>
                           <td><span style={{ backgroundColor: PromotionStatus.findColor(promotion.status) }}
                             className="badge badge-info">{PromotionStatus.findName(promotion.status)}</span></td>
                           <td className="table-action">
-                            <Link to={`/promotion/detail/${promotion.id}`}><i style={{ fontSize: '15px', margin: '0 10px' }}
-                              className="align-middle fas fa-fw fa-pen" /></Link>
+                            <Link to={`/promotion/detail/${promotion.id}`}><i style={{ fontSize: '15px' }}
+                              className="ion ion-ios-open mr-2" /></Link>
+
                             {promotion.status == PromotionStatus.INIT &&
                               <>
+                                <Link to={`/promotion/create-or-update/${promotion.id}`}><i style={{ fontSize: '15px', margin: '0 10px' }}
+                                  className="align-middle fas fa-fw fa-pen" /></Link>
                                 <i onClick={() => {
                                   setSelectedId(promotion.id)
                                   setIsShowApprovedPopup(true)

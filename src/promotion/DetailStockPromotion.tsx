@@ -4,7 +4,6 @@ import FormModel from "../model/FormModel";
 import { useEffect, useState } from "react";
 import { Form, Page, StatsForm } from "../interface";
 import * as StockFormStatus from '../constant/StockFormStatus';
-import DateTimeUtil from "../utils/DateTimeUtil";
 
 function DetailStockPromotion() {
     let { id } = useParams();

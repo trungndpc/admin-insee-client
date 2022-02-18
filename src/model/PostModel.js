@@ -25,4 +25,11 @@ export default class PostModel {
             APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/post/get?id=${id}`, resolve, reject);
         });
     }
+
+    static updateStatus(id, status) {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/post/update-status?id=${id}&status=${status}`, resolve, reject);
+        });
+    }
+
 }

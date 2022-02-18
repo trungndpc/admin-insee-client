@@ -8,6 +8,12 @@ export default class PromotionModel {
         });
     }
 
+    static update(post) {
+        return new Promise((resolve, reject) => {
+            APIUtil.postJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/promotion/update`, JSON.stringify(post), resolve, reject);
+        });
+    }
+
     static list(types) {
         return new Promise((resolve, reject) => {
             APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/promotion/list?${types ? ('types=' + types) : ''}`, resolve, reject);

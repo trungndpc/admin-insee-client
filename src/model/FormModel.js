@@ -28,17 +28,40 @@ export default class FormModel {
         });
     }
 
+    static findStockForm(promotionIds, city, status, page, pageSize) {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/form/find-by-promotions?promotionIds=${promotionIds}&page=${page}&pageSize=${pageSize}${(city && city != 0) ? ('&city=' + city) : ''}${(status && status != 0) ? ('&status=' + status) : ''}`, resolve, reject);
+        });
+    }
+
     static updateStatusTopic(promotionId, topicId, status) {
         return new Promise((resolve, reject) => {
             APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/promotion/lighting-quiz/update-status-topic?id=${promotionId}&topicId=${topicId}&status=${status}`, resolve, reject);
         });
     }
-    
+
     static updateStatus(formId, status, note) {
         return new Promise((resolve, reject) => {
-            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/form/update-status?id=${formId}&status=${status}${note? ('&note=' + note) : ''}`, resolve, reject);
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/form/update-status?id=${formId}&status=${status}${note ? ('&note=' + note) : ''}`, resolve, reject);
         });
     }
 
+    static statsFormBypromotion() {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/form/stats-form-promotion`, resolve, reject);
+        });
+    }
+
+    static countByTypePromotion(status) {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/form/count?${status && 'status=' + status}`, resolve, reject);
+        });
+    }
+
+    static countFormByTypePromotion(type) {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/form/count-by-type-promotion?type=${type}`, resolve, reject);
+        });
+    }
 
 }

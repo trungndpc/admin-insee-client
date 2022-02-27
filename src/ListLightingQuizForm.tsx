@@ -41,6 +41,7 @@ function ListLightingQuizForm() {
   }
 
   useEffect(() => {
+    fetchTopic()
     fetchLQForm(id, topicId)
   }, [])
 
@@ -56,13 +57,12 @@ function ListLightingQuizForm() {
           }} />
           <div className="row">
             <div className="col-12 col-xl-12">
-
               <div className="card">
                 <div className="card-header">
                   <h5 className="card-title m-card-title">Dach sách tham gia</h5>
-                  {topic && topic.status == TopicStatus.LOCKED &&
+                  {topic && topic.status == TopicStatus.APPROVED &&
                     <div className="cart-btn-bar">
-                      <button onClick={() => { setIsShowPopup(true) }} className="btn btn-primary mr-1">Duyệt BXH</button>
+                      <button onClick={() => { setIsShowPopup(true) }} className="btn btn-primary mr-1">Kết thúc</button>
                     </div>
                   }
                 </div>
@@ -84,7 +84,7 @@ function ListLightingQuizForm() {
                           <td>{<img className="avatar" src={form.user.avatar} />}</td>
                           <td>{form.user.name}</td>
                           <td>{form.point}</td>
-                          <td>{(form.jsonDetail.timeEnd - form.jsonDetail.timeStart) / 1000} giây</td>
+                          <td>{(form.jsonDetail.timeEnd - form.jsonDetail.timeStart) / 1000} seconds</td>
                         </tr>
                       )
                     })}

@@ -10,6 +10,7 @@ import AlertUtils from "../utils/AlertUtils";
 import * as StockFormStatus from '../constant/StockFormStatus';
 import { SendGiftPopup } from '../gift/popup';
 import GiftModel from "../model/GiftModel";
+import DateTimeUtil from "../utils/DateTimeUtil";
 
 function DetailStockForm({ data }: any) {
   const [isShowImgModel, setIsShowImgModel] = useState(false)
@@ -140,7 +141,10 @@ function DetailStockForm({ data }: any) {
         }} />
         <ImagePopup open={isShowImgModel}
           onCloseModal={() => { setIsShowImgModel(false) }}
-          url={selectedJSONImg?.url} />
+          url={selectedJSONImg?.url}
+          time={selectedJSONImg?.time}
+          location={selectedJSONImg?.location}
+        />
       </div>
     </main>
   );
@@ -149,7 +153,7 @@ function DetailStockForm({ data }: any) {
 export default DetailStockForm;
 
 const owlClass = "popup";
-export function ImagePopup({ open, onCloseModal, url }: any) {
+export function ImagePopup({ open, onCloseModal, url, time, location }: any) {
   return (
     <Modal
       open={open}
@@ -169,6 +173,8 @@ export function ImagePopup({ open, onCloseModal, url }: any) {
       <div className={owlClass}>
         <div className={`${owlClass}__wrapper`}>
           <img style={{ maxHeight: '70vh', maxWidth: '70vw' }} src={url} alt="" />
+          <p style={{marginTop: '20px', lineHeight: '5px'}}>Thời gian: {DateTimeUtil.toString(time)}</p>
+          {location && <p>Vị trí: {JSON.stringify(location)}</p>}
         </div>
         <div className={`${owlClass}__group-btn`}>
           <div

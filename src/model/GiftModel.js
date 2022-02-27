@@ -8,4 +8,10 @@ export default class GiftModel {
         });
     }
 
+    static count(status) {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/gift/count`, resolve, reject);
+        });
+    }
+
 }

@@ -10,6 +10,7 @@ import UserModel from "./model/UserModel";
 import { Link } from "react-router-dom";
 import * as UserStatus from './constant/UserStatus';
 import AlertUtils from "./utils/AlertUtils";
+import DateTimeUtil from "./utils/DateTimeUtil";
 
 const default_avatar = 'http://cdn.onlinewebfonts.com/svg/img_264570.png'
 const PAGE_SIZE = 10;
@@ -82,19 +83,20 @@ function Retailer() {
                         <option value={UserStatus.WAIT_COMPLETE_PROFILE}>Chờ hoàn thành hồ sơ</option>
                       </select>
                     </div>
-                    <button style={{ marginRight: '10px !important' }} onClick={() => { setIsOpenImportCustomerPopup(true) }} className="btn btn-primary mr-1">Import Khách hàng</button>
+                    <button style={{ marginRight: '10px !important' }} onClick={() => { setIsOpenImportCustomerPopup(true) }} className="btn btn-primary mr-1">Import</button>
+                    <button style={{ marginRight: '20px !important', backgroundColor: '#6f42c1' }} onClick={() => { window.open(`${process.env.REACT_APP_DOMAIN}/api/user/export-excel`, '_blank') }} className="btn btn-primary mr-1">Export</button>
                   </div>
 
                 </div>
                 <table className="table">
                   <thead>
                     <tr>
-                      {/* <th>No.</th> */}
                       <th></th>
                       <th>SDT</th>
                       <th>Cửa hàng</th>
                       <th>Thành phố / Quận</th>
                       <th>INSEE ID</th>
+                      <th>Thời gian</th>
                       <th>Trạng thái</th>
                       <th>Actions</th>
                     </tr>
@@ -102,14 +104,14 @@ function Retailer() {
                   <tbody>
                     {userPage && userPage.list && userPage.list.map((user, key) => {
                       return (
-                        <tr>
-                          {/* <td>{user.id}</td> */}
+                        <tr key={key}>
                           <td><img className="m-avatar" src={user.avatar ? user.avatar : default_avatar} /></td>
                           <td>{user.phone}</td>
                           <td>{user.name}</td>
                           <td>{City.getName(user.cityId)}</td>
                           <td>{user.inseeId}</td>
                           <td><span style={{ backgroundColor: UserStatus.findColor(user.status) }} className="badge badge-info">{UserStatus.findName(user.status)}</span></td>
+                          <td>{DateTimeUtil.toString(user.createdTime * 1000)}</td>
                           <td className="table-action">
                             <Link to={`/retailer/${user.id}`}><i style={{ fontSize: '30px' }} className="align-middle ion ion-ios-play mr-2" /></Link>
                           </td>

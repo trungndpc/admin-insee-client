@@ -30,8 +30,6 @@ function CreateOrUpdatePromotion() {
 
   const submit = () => {
     if (!form.title || !form.type
-      || !form.cityIds || form.cityIds.length <= 0
-      || !form.districtIds || form.districtIds.length <= 0
       || !form.timeStart || !form.timeEnd) {
       setErrorMsg('Vui lòng điền đủ thông tin')
       return;
@@ -50,7 +48,11 @@ function CreateOrUpdatePromotion() {
       PromotionModel.create(form)
         .then(resp => {
           if (resp.error == 0) {
-            navigate('/promotion')
+            if (form.type == 21) {
+              navigate('/egagement')
+            } else {
+              navigate('/promotion')
+            }
             AlertUtils.showSuccess('Thành công')
           } else {
             AlertUtils.showError(resp.msg)

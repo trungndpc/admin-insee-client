@@ -19,6 +19,7 @@ export interface User {
     address: string,
     products: Array<number>
     inseeId: string
+    createdTime: number
 }
 
 export interface Post {
@@ -123,6 +124,14 @@ export interface UserFilter {
     status: number,
     search: string
 }
+
+export interface FormFilter {
+    cityId: number,
+    status: number,
+    search: string
+    promotionIds: Array<number>
+}
+
 export interface CountUserDashboard {
     numUser: number,
     numApprovedUser: number,
@@ -170,4 +179,29 @@ export interface Broadcast {
     totalUidsAfterBuildUser: number,
     totalUidsSuccessSend: number
     userIds: Array<number>
+}
+
+export interface FormPromotionMetric {
+    promotionId: number,
+    total: number,
+    promotion: Promotion
+}
+
+export interface CountGiftDTO { 
+    total : number,
+    send : number,
+    received : number
+}
+
+export interface CountPromotionDTO {
+    promotion : number,
+    engagement : number
+}
+
+export interface CountFormDTO { 
+    total: number,
+    init : number,
+    approved: number,
+    sendGift: number,
+    receivedGift: number
 }

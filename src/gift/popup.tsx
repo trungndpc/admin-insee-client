@@ -129,7 +129,7 @@ class CardPhoneComponent extends React.Component<{}, StateCardPhoneComponent> {
         const cards = this.state.cards;
         return (
             <div>
-                { cards && cards.map((card: number) => {
+                {cards && cards.map((card: number) => {
                     return (
                         <div style={{ position: 'relative' }}>
                             <span onClick={() => { this.remove(card) }} className="btn-x-card">X</span>
@@ -184,9 +184,9 @@ class CardPhoneItemComponent extends React.Component<{}, StateCardPhoneItemCompo
                     <select onChange={(e: React.FormEvent<HTMLSelectElement>) => {
                         this.setState({ cardPhone: { ...cardPhone, value: Number(e.currentTarget.value) } })
                     }} className="form-control">
-                        <option value={50}>50</option>
-                        <option value={100}>100</option>
-                        <option value={200}>200</option>
+                        <option value={50}>50.000 đ</option>
+                        <option value={100}>100.000 đ</option>
+                        <option value={200}>200.000 đ</option>
                     </select>
                 </div>
                 <div className="input-group mb-3">

@@ -31,13 +31,18 @@ import Egagements from './Egagements';
 import CreateOrUpdateBroadcast from './CreateOrUpdateBroadcast';
 import BroadcastPage from './BroadcastPage';
 import DetailBroadcast from './DetailBroadcast';
+import PromotionForms from './PromotionForms';
+import DashboardRetailer from './DashboardRetailer';
+import DashboardEgagements from './DashboardEgagements';
+import DashboardPromotion from './DashboardPromotion';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/retailer" element={<Retailer />} />
+        <Route path="/retailer" element={<DashboardRetailer />} />
+        <Route path="/retailer/list" element={<Retailer />} />
         <Route path="/stock-form" element={<StockForm />} />
         <Route path="/retailer/:id" element={<DetailRetailer />} />
         <Route path="/post/create" element={<CreatePost />} />
@@ -45,8 +50,11 @@ ReactDOM.render(
         <Route path="/post" element={<Posts />} />
         <Route path="/promotion/create-or-update" element={<CreateOrUpdatePromotion />} />
         <Route path="/promotion/create-or-update/:id" element={<CreateOrUpdatePromotion />} />
-        <Route path="/promotion" element={<Promotions />} />
-        <Route path="/egagement" element={<Egagements />} />
+        <Route path="/promotion" element={<DashboardPromotion />} />
+        <Route path="/promotion/list" element={<Promotions />} />
+        <Route path="/promotion/forms" element={<PromotionForms />} />
+        <Route path="/egagement" element={<DashboardEgagements />} />
+        <Route path="/egagement/list" element={<Egagements />} />
         <Route path="/broadcast" element={<BroadcastPage />} />
         <Route path="/broadcast/create-or-update" element={<CreateOrUpdateBroadcast />} />
         <Route path="/broadcast/create-or-update/:id" element={<CreateOrUpdateBroadcast />} />

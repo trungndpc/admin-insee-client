@@ -78,7 +78,7 @@ function Egagements() {
               <div className="card">
                 <div className="card-header">
                   <div className="cart-btn-bar">
-                    <Link to={"/promotion/create-or-update"} className="btn btn-primary mr-1">Thêm chiến dịch</Link>
+                    <Link to={"/egagement/create-or-update"} className="btn btn-primary mr-1">Thêm chiến dịch</Link>
                   </div>
                 </div>
                 <table className="table table-striped table-hover">

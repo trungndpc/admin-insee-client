@@ -65,6 +65,7 @@ export interface Form {
     user: User,
     time: number
     promotion: Promotion
+    note: string
 }
 
 export interface StatsForm {
@@ -80,6 +81,8 @@ export interface ImgRealtimePhoto {
 
 export interface StockForm extends Form {
     jsonImgs: Array<ImgRealtimePhoto>
+    bags : number,
+    cements: Array<number>
 }
 
 export interface TopicLightingQuizForm {

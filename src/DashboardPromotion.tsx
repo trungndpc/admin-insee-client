@@ -2,15 +2,29 @@ import Layout from "./component/Layout";
 import "react-responsive-modal/styles.css";
 import "../src/popup/styles.scss";
 import { useEffect, useState } from "react";
-import { CountFormDTO, CountUserDashboard } from "./interface";
+import { CountFormDTO, CountUserDashboard, Promotion } from "./interface";
 import UserModel from "./model/UserModel";
 import FormModel from "./model/FormModel";
 import * as TypePromotion from './constant/PromotionType'
+import PromotionModel from "./model/PromotionModel";
 
 
 function DashboardPromotion() {
   const [countUser, setCountUser] = useState<CountUserDashboard>();
   const [countFormByPromotion, setCountFormByPromotion] = useState<CountFormDTO>()
+  const [listPromotion, setListPromotion] = useState<Array<Promotion>>()
+  const [selectedPromotion, setSelectedPromotion] = useState<number>(0)
+
+
+  const fetchListStockPromotion = () => {
+    PromotionModel.list(TypePromotion.STOCK_PROMOTION_TYPE)
+      .then(resp => {
+        if (resp.error == 0) {
+          let lst: Array<Promotion> = resp.data.list;
+          setListPromotion(lst);
+        }
+      })
+  }
 
   const fetchCountUser = () => {
     UserModel.count()
@@ -20,6 +34,7 @@ function DashboardPromotion() {
         }
       })
   }
+
   const fetchCountForm = () => {
     FormModel.countFormByTypePromotion(TypePromotion.STOCK_PROMOTION_TYPE)
       .then(resp => {
@@ -32,6 +47,7 @@ function DashboardPromotion() {
   useEffect(() => {
     fetchCountUser()
     fetchCountForm()
+    fetchListStockPromotion()
   }, [])
 
   return (
@@ -136,7 +152,6 @@ function DashboardPromotion() {
               </div>
             </div>
 
-
             <div className="col-md-6 col-lg-3 col-xl">
               <div className="card">
                 <div className="card-body">
@@ -160,6 +175,31 @@ function DashboardPromotion() {
               </div>
             </div>
 
+          </div>
+          <div className="row">
+            <div className="col-2 col-xl-2 ml-auto">
+              {listPromotion &&
+                <select value={selectedPromotion} onChange={(e: React.FormEvent<HTMLSelectElement>) => {
+                  setSelectedPromotion(Number(e.currentTarget.value))
+                }} className="form-control">
+                  <option value={0}>Chiến dịch</option>
+                  {listPromotion && listPromotion.map((value) => {
+                    return (
+                      <option key={value.id} value={value.id}>{value.title}</option>
+                    )
+                  })}
+                </select>
+              }
+            </div>
+            <div style={{ textAlign: 'right' }} className="col-1 col-xl-1">
+              <button style={{ backgroundColor: '#6f42c1' }} onClick={() => {
+                if (selectedPromotion == 0) {
+                  alert("Vui lòng chọn một chiến dịch")
+                  return;
+                }
+                window.open(`${process.env.REACT_APP_DOMAIN}/api/stock-form/export-excel?promotionId=${selectedPromotion}`, '_blank')
+              }} className="btn btn-primary mr-1">Export</button>
+            </div>
           </div>
         </div>
       </main>

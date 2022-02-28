@@ -8,7 +8,7 @@ export default class Layout extends React.PureComponent {
             <div className="wrapper">
                 <nav id="sidebar" className="sidebar">
                     <a className="sidebar-brand">
-                        {/* <img style={{ height: '30px' }} src="https://ximanginsee.gapit.com.vn/html/images/logo.png" /> */}
+                        <img style={{ height: '30px' }} src="https://ximanginsee.gapit.com.vn/html/images/logo.png" />
                     </a>
                     <div className="sidebar-content">
                         <div className="sidebar-user">
@@ -26,10 +26,10 @@ export default class Layout extends React.PureComponent {
                             </li>
                             <li className="sidebar-item">
                                 <Link to="/retailer" data-toggle="collapse" className="sidebar-link collapsed">
-                                    <i className="align-middle mr-2 fas fa-fw fa-file" /> <span className="align-middle">Cửa hàng</span>
+                                    <i className="align-middle mr-2 fas fa-fw fa-file" /> <span className="align-middle">Retailer</span>
                                 </Link>
                                 <ul className="sidebar-dropdown list-unstyled collapse show" data-parent="#sidebar">
-                                    <li className="sidebar-item active"><Link className="sidebar-link" to={"/retailer/list"}>Danh sách</Link></li>
+                                    <li className="sidebar-item active"><Link className="sidebar-link" to={"/retailer/list"}>Management</Link></li>
                                 </ul>
                             </li>
                             <li className="sidebar-item">
@@ -42,8 +42,8 @@ export default class Layout extends React.PureComponent {
                                     <i className="align-middle mr-2 fas fa-fw fa-sign-in-alt" /> <span className="align-middle">Promotion </span>
                                 </Link>
                                 <ul className="sidebar-dropdown list-unstyled collapse show" data-parent="#sidebar">
-                                    <li className="sidebar-item active"><Link className="sidebar-link" to={"/promotion/list"}>DS Chiến dịch</Link></li>
-                                    <li className="sidebar-item active"><Link className="sidebar-link" to={"/promotion/forms"}>Danh sách đơn</Link></li>
+                                    <li className="sidebar-item active"><Link className="sidebar-link" to={"/promotion/list"}>Management</Link></li>
+                                    <li className="sidebar-item active"><Link className="sidebar-link" to={"/promotion/forms"}>Form</Link></li>
                                 </ul>
                             </li>
                             <li className="sidebar-item">
@@ -51,7 +51,7 @@ export default class Layout extends React.PureComponent {
                                     <i className="align-middle mr-2 fas fa-fw fa-sign-in-alt" /> <span className="align-middle">Egagements </span>
                                 </Link>
                                 <ul className="sidebar-dropdown list-unstyled collapse show" data-parent="#sidebar">
-                                    <li className="sidebar-item active"><Link className="sidebar-link" to={"/egagement/list"}>DS Chiến dịch</Link></li>
+                                    <li className="sidebar-item active"><Link className="sidebar-link" to={"/egagement/list"}>Management</Link></li>
                                 </ul>
                             </li>
                             <li className="sidebar-item">

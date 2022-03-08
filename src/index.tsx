@@ -35,6 +35,7 @@ import PromotionForms from './PromotionForms';
 import DashboardRetailer from './DashboardRetailer';
 import DashboardEgagements from './DashboardEgagements';
 import DashboardPromotion from './DashboardPromotion';
+import CreateOrUpdateEngagement from './CreateOrUpdateEngagement';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -55,6 +56,8 @@ ReactDOM.render(
         <Route path="/promotion/forms" element={<PromotionForms />} />
         <Route path="/egagement" element={<DashboardEgagements />} />
         <Route path="/egagement/list" element={<Egagements />} />
+        <Route path="/egagement/create-or-update" element={<CreateOrUpdateEngagement />} />
+
         <Route path="/broadcast" element={<BroadcastPage />} />
         <Route path="/broadcast/create-or-update" element={<CreateOrUpdateBroadcast />} />
         <Route path="/broadcast/create-or-update/:id" element={<CreateOrUpdateBroadcast />} />

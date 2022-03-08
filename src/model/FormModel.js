@@ -64,4 +64,11 @@ export default class FormModel {
         });
     }
 
+    static updateStockForm(id, form) {
+        return new Promise((resolve, reject) => {
+            APIUtil.postJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/stock-form/update?id=${id}`, JSON.stringify(form), resolve, reject);
+        });
+    }
+
+
 }

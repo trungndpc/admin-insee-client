@@ -12,7 +12,7 @@ import AlertUtils from "./utils/AlertUtils";
 import { useNavigate } from 'react-router-dom';
 
 const locationOptions = City.getOptions()
-function CreateOrUpdatePromotion() {
+function CreateOrUpdateEngagement() {
   let { id } = useParams();
   const [form, setForm] = useState<Promotion>({} as Promotion)
   const [errorMsg, setErrorMsg] = useState<string>()
@@ -96,10 +96,10 @@ function CreateOrUpdatePromotion() {
                         <label htmlFor="inputState">Type</label>
                         <select value={form.type} disabled={id != null} onChange={(e: React.FormEvent<HTMLSelectElement>) => { setForm({ ...form, type: Number(e.currentTarget.value) }) }} id="inputState" className="form-control">
                           <option selected>Choose...</option>
-                          <option value={20}>Stock Promotion</option>
-                          {/* <option value={21}>Lighting Quiz Promotion</option> */}
-                          {/* <option value={0}>Dự đoán kết quả bóng đá</option> */}
-                          <option value={0}>Loyalty</option>
+                          {/* <option value={20}>Stock Promotion</option> */}
+                          <option value={21}>Lighting Quiz Promotion</option>
+                          <option value={0}>Dự đoán kết quả bóng đá</option>
+                          {/* <option value={0}>Loyalty</option> */}
                         </select>
                       </div>
                     </div>
@@ -171,4 +171,4 @@ function CreateOrUpdatePromotion() {
   );
 }
 
-export default CreateOrUpdatePromotion;
+export default CreateOrUpdateEngagement;

@@ -11,6 +11,7 @@ import * as StockFormStatus from '../constant/StockFormStatus';
 import { SendGiftPopup } from '../gift/popup';
 import GiftModel from "../model/GiftModel";
 import DateTimeUtil from "../utils/DateTimeUtil";
+import * as CementUtil from '../utils/CementUtil'
 
 function DetailStockForm({ data }: any) {
   const [isShowImgModel, setIsShowImgModel] = useState(false)
@@ -53,6 +54,18 @@ function DetailStockForm({ data }: any) {
       })
   }
 
+  const updateForm = () => {
+    FormModel.updateStockForm(form?.id, form)
+      .then(resp => {
+        if (resp.error == 0) {
+          AlertUtils.showSuccess('Thành công')
+          fetchForm()
+        } else {
+          AlertUtils.showError(resp.msg)
+        }
+      })
+  }
+
   useEffect(() => {
     setForm(data as StockForm)
   }, [])
@@ -85,6 +98,23 @@ function DetailStockForm({ data }: any) {
                               <label htmlFor="inputUsername">Địa chỉ</label>
                               <input type="text" className="form-control" value={`${form.user.address} - ${District.getName(form.user.districtId)} - ${City.getName(form.user.cityId)} `} />
                             </div>
+                            <div className="form-group">
+                              <label htmlFor="inputUsername">Số bao</label>
+                              <input type="text" className="form-control" value={form.bags} />
+                            </div>
+                            <div className="form-group">
+                              <label htmlFor="inputUsername">Xi măng</label>
+                              <input type="text" className="form-control" value={`${form.cements ? form.cements.map(c => {
+                                return CementUtil.findById(c)?.name;
+                              }).join(', ') : ''}`} />
+                            </div>
+                            <div className="form-group">
+                              <label htmlFor="inputUsername">Ghi chú</label>
+                              <input onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                                setForm({ ...form, note: e.currentTarget.value })
+                              }}
+                                type="text" className="form-control" value={form.note} />
+                            </div>
                           </div>
                           <div className="col-md-8">
                             <div className="text-center">
@@ -110,6 +140,10 @@ function DetailStockForm({ data }: any) {
                   <div className="card-footer">
                     {form?.status == StockFormStatus.INIT &&
                       <>
+                        <button style={{ backgroundColor: '#28a745', marginRight: '30px' }} onClick={() => {
+                          updateForm()
+                        }} className="btn btn-danger m-btn-danger">Save</button>
+
                         <button onClick={() => setIsShowApporvedPopup(true)} className="btn btn-danger m-btn-danger">Duyệt</button>
                         <AreYouSurePopup open={isShowApporvedPopup} onCloseModal={() => { setIsShowApporvedPopup(false) }}
                           onAgree={() => {
@@ -173,7 +207,7 @@ export function ImagePopup({ open, onCloseModal, url, time, location }: any) {
       <div className={owlClass}>
         <div className={`${owlClass}__wrapper`}>
           <img style={{ maxHeight: '70vh', maxWidth: '70vw' }} src={url} alt="" />
-          <p style={{marginTop: '20px', lineHeight: '5px'}}>Thời gian: {DateTimeUtil.toString(time)}</p>
+          <p style={{ marginTop: '20px', lineHeight: '5px' }}>Thời gian: {DateTimeUtil.toString(time)}</p>
           {location && <p>Vị trí: {JSON.stringify(location)}</p>}
         </div>
         <div className={`${owlClass}__group-btn`}>

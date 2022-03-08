@@ -50,10 +50,10 @@ function CreateOrUpdateBroadcast() {
       return false;
     }
 
-    if (form.type == BroadcastType.REQUEST_REGISTER_ZNS) {
-      setErrorMsg('Chưa hỗ trợ type này')
-      return false;
-    }
+    // if (form.type == BroadcastType.REQUEST_REGISTER_ZNS) {
+    //   setErrorMsg('Chưa hỗ trợ type này')
+    //   return false;
+    // }
 
     if (!form.cityIds) {
       setErrorMsg('Vui lòng chọn ít nhất một thành phố')

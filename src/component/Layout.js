@@ -3,12 +3,18 @@ import { Link } from "react-router-dom";
 
 export default class Layout extends React.PureComponent {
 
+
+    isActive = (name) => {
+        let path = window.location.pathname;
+        return path.startsWith(name);
+    }
+
     render() {
         return (
             <div className="wrapper">
                 <nav id="sidebar" className="sidebar">
                     <a className="sidebar-brand">
-                        {/* <img style={{ height: '30px' }} src="https://ximanginsee.gapit.com.vn/html/images/logo.png" /> */}
+                        <img style={{ height: '30px' }} src="https://ximanginsee.gapit.com.vn/html/images/logo.png" />
                     </a>
                     <div className="sidebar-content">
                         <div className="sidebar-user">
@@ -24,39 +30,39 @@ export default class Layout extends React.PureComponent {
                                     <i className="align-middle mr-2 fas fa-fw fa-home" /> <span className="align-middle">Dashboards</span>
                                 </Link>
                             </li>
-                            <li className="sidebar-item">
+                            <li className={`sidebar-item ${this.isActive('/retailer') && 'active'}`}>
                                 <Link to="/retailer" data-toggle="collapse" className="sidebar-link collapsed">
-                                    <i className="align-middle mr-2 fas fa-fw fa-file" /> <span className="align-middle">Cửa hàng</span>
+                                    <i className="align-middle fas fa-fw fa-store" /> <span className="align-middle">Cửa hàng</span>
                                 </Link>
-                                <ul className="sidebar-dropdown list-unstyled collapse show" data-parent="#sidebar">
+                                <ul className={`sidebar-dropdown list-unstyled collapse ${this.isActive('/retailer') ? ' show' : ''}`} data-parent="#sidebar">
                                     <li className="sidebar-item active"><Link className="sidebar-link" to={"/retailer/list"}>Danh sách</Link></li>
                                 </ul>
                             </li>
-                            <li className="sidebar-item">
+                            <li className={`sidebar-item ${this.isActive('/post') && 'active'}`}>
                                 <Link to="/post" data-toggle="collapse" className="sidebar-link collapsed">
-                                    <i className="align-middle mr-2 fas fa-fw fa-sign-in-alt" /> <span className="align-middle">Post </span>
+                                    <i className="align-middle mr-2 fas fa-fw fa-sign-in-alt" /> <span className="align-middle">Bài viết</span>
                                 </Link>
                             </li>
-                            <li className="sidebar-item">
+                            <li className={`sidebar-item ${this.isActive('/promotion') && 'active'}`}>
                                 <Link to="/promotion" data-toggle="collapse" className="sidebar-link collapsed">
-                                    <i className="align-middle mr-2 fas fa-fw fa-sign-in-alt" /> <span className="align-middle">Promotion </span>
+                                    <i className="align-middle fas fa-fw fas fa-ad" /> <span className="align-middle">Khuyến mãi </span>
                                 </Link>
-                                <ul className="sidebar-dropdown list-unstyled collapse show" data-parent="#sidebar">
+                                <ul className={`sidebar-dropdown list-unstyled collapse ${this.isActive('/promotion') ? ' show' : ''}`} data-parent="#sidebar">
                                     <li className="sidebar-item active"><Link className="sidebar-link" to={"/promotion/list"}>DS Chiến dịch</Link></li>
                                     <li className="sidebar-item active"><Link className="sidebar-link" to={"/promotion/forms"}>Danh sách đơn</Link></li>
                                 </ul>
                             </li>
-                            <li className="sidebar-item">
+                            <li className={`sidebar-item ${this.isActive('/egagement') && 'active'}`}>
                                 <Link to="/egagement" data-toggle="collapse" className="sidebar-link collapsed">
-                                    <i className="align-middle mr-2 fas fa-fw fa-sign-in-alt" /> <span className="align-middle">Egagements </span>
+                                    <i className="align-middle far fa-fw fa-heart" /> <span className="align-middle">Egagements </span>
                                 </Link>
-                                <ul className="sidebar-dropdown list-unstyled collapse show" data-parent="#sidebar">
+                                <ul className={`sidebar-dropdown list-unstyled collapse ${this.isActive('/egagement') ? ' show' : ''}`} data-parent="#sidebar">
                                     <li className="sidebar-item active"><Link className="sidebar-link" to={"/egagement/list"}>DS Chiến dịch</Link></li>
                                 </ul>
                             </li>
-                            <li className="sidebar-item">
+                            <li className={`sidebar-item ${this.isActive('/broadcast') && 'active'}`}>
                                 <Link to="/broadcast" data-toggle="collapse" className="sidebar-link collapsed">
-                                    <i className="align-middle mr-2 fas fa-fw fa-sign-in-alt" /> <span className="align-middle">Broadcast</span>
+                                    <i className="align-middle fas fa-fw fa-bullhorn" /> <span className="align-middle">Broadcast</span>
                                 </Link>
                             </li>
                         </ul>

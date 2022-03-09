@@ -13,7 +13,7 @@ import AlertUtils from "./utils/AlertUtils";
 import DateTimeUtil from "./utils/DateTimeUtil";
 
 const default_avatar = 'http://cdn.onlinewebfonts.com/svg/img_264570.png'
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 500;
 function Retailer() {
   const [page, setPage] = useState(0);
   const [userPage, setUserPage] = useState<Page<User>>()
@@ -110,8 +110,8 @@ function Retailer() {
                           <td>{user.name}</td>
                           <td>{City.getName(user.cityId)}</td>
                           <td>{user.inseeId}</td>
-                          <td><span style={{ backgroundColor: UserStatus.findColor(user.status) }} className="badge badge-info">{UserStatus.findName(user.status)}</span></td>
                           <td>{DateTimeUtil.toString(user.createdTime * 1000)}</td>
+                          <td><span style={{ backgroundColor: UserStatus.findColor(user.status) }} className="badge badge-info">{UserStatus.findName(user.status)}</span></td>
                           <td className="table-action">
                             <Link to={`/retailer/${user.id}`}><i style={{ fontSize: '30px' }} className="align-middle ion ion-ios-play mr-2" /></Link>
                           </td>

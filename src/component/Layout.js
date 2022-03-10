@@ -65,6 +65,14 @@ export default class Layout extends React.PureComponent {
                                     <i className="align-middle fas fa-fw fa-bullhorn" /> <span className="align-middle">Broadcast</span>
                                 </Link>
                             </li>
+                            <li className={`sidebar-item ${this.isActive('/gift') && 'active'}`}>
+                                <Link to="/gift" data-toggle="collapse" className="sidebar-link collapsed">
+                                    <i className="align-middle fas fa-fw fa-gift" /> <span className="align-middle">Quà tặng</span>
+                                </Link>
+                                <ul className={`sidebar-dropdown list-unstyled collapse ${this.isActive('/gift') ? ' show' : ''}`} data-parent="#sidebar">
+                                    <li className="sidebar-item active"><Link className="sidebar-link" to={"/gift/list"}>Danh sách</Link></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </nav>

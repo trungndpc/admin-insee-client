@@ -14,4 +14,10 @@ export default class GiftModel {
         });
     }
 
+    static find(status, page, pageSize) {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/gift/find?page=${page}&pageSize=${pageSize}${(status && status != 0) ? ('&status=' + status) : ''}`, resolve, reject);
+        });
+    }
+
 }

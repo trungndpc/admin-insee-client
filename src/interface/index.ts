@@ -81,7 +81,7 @@ export interface ImgRealtimePhoto {
 
 export interface StockForm extends Form {
     jsonImgs: Array<ImgRealtimePhoto>
-    bags : number,
+    bags: number,
     cements: Array<number>
 }
 
@@ -153,9 +153,11 @@ export interface UserCityMetric {
 }
 
 export interface FormGift {
+    title: string,
     type: number,
     totalValue: number
     cardPhones: Array<CardPhoneGift>
+    userId: number
 }
 
 export interface CardPhoneGift {
@@ -190,21 +192,30 @@ export interface FormPromotionMetric {
     promotion: Promotion
 }
 
-export interface CountGiftDTO { 
-    total : number,
-    send : number,
-    received : number
+export interface CountGiftDTO {
+    total: number,
+    send: number,
+    received: number
 }
 
 export interface CountPromotionDTO {
-    promotion : number,
-    engagement : number
+    promotion: number,
+    engagement: number
 }
 
-export interface CountFormDTO { 
+export interface CountFormDTO {
     total: number,
-    init : number,
+    init: number,
     approved: number,
     sendGift: number,
     receivedGift: number
+}
+
+export interface GiftDTO {
+    id: number,
+    title: string,
+    type: number,
+    totalValue: number
+    user: User,
+    status: number
 }

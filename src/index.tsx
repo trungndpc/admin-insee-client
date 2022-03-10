@@ -36,6 +36,8 @@ import DashboardRetailer from './DashboardRetailer';
 import DashboardEgagements from './DashboardEgagements';
 import DashboardPromotion from './DashboardPromotion';
 import CreateOrUpdateEngagement from './CreateOrUpdateEngagement';
+import DashboardGift from './DashboardGift';
+import Gifts from './Gifts';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -54,14 +56,21 @@ ReactDOM.render(
         <Route path="/promotion" element={<DashboardPromotion />} />
         <Route path="/promotion/list" element={<Promotions />} />
         <Route path="/promotion/forms" element={<PromotionForms />} />
+
+
         <Route path="/egagement" element={<DashboardEgagements />} />
         <Route path="/egagement/list" element={<Egagements />} />
         <Route path="/egagement/create-or-update" element={<CreateOrUpdateEngagement />} />
+
+        <Route path="/gift" element={<DashboardGift />} />
+        <Route path="/gift/list" element={<Gifts />} />
+
 
         <Route path="/broadcast" element={<BroadcastPage />} />
         <Route path="/broadcast/create-or-update" element={<CreateOrUpdateBroadcast />} />
         <Route path="/broadcast/create-or-update/:id" element={<CreateOrUpdateBroadcast />} />
         <Route path="/broadcast/detail/:id" element={<DetailBroadcast />} />
+
         <Route path="/form/list/:id/:topicId" element={<ListLightingQuizForm />} />
         <Route path="/promotion/detail/:id" element={<DetailPromotion />} />
         <Route path="/promotion/detail/:id/:topicId" element={<DetailPromotion />} />

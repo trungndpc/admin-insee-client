@@ -8,9 +8,17 @@ import "../popup/styles.scss";
 const owlClass = "popup";
 
 
-export function SendGiftPopup({ open, onCloseModal, onAgree }) {
+export function SendGiftPopup({ open, onCloseModal, onAgree, userId }) {
     const [form, setForm] = useState<FormGift>({ type: 1 } as FormGift)
     const phoneCardRef = React.createRef<CardPhoneComponent>()
+
+    const countValue = (cardPhones: Array<CardPhoneGift>) => {
+        let c = 0;
+        cardPhones.forEach(cardPhone => {
+            c = c + cardPhone.value;
+        });
+        return c;
+    }
 
     return (
         <Modal
@@ -65,7 +73,10 @@ export function SendGiftPopup({ open, onCloseModal, onAgree }) {
                         className={`${owlClass}__group-btn__item right`}
                         onClick={() => {
                             if (form.type == 1) {
-                                onAgree({ ...form, cardPhones: phoneCardRef.current?.getValue() })
+                                let data = phoneCardRef.current?.getValue() as Array<CardPhoneGift>;
+                                let count = countValue(data);
+                                let title = 'Thẻ điện thoại ' + count + '.000 đ'
+                                onAgree({ ...form, cardPhones: phoneCardRef.current?.getValue(), title: title, userId: userId })
                             }
                         }}
                     >

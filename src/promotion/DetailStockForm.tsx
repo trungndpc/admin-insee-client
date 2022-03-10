@@ -172,7 +172,7 @@ function DetailStockForm({ data }: any) {
         <SendGiftPopup open={isShowGiftPopup} onCloseModal={() => { setIsShowGiftPopup(false) }} onAgree={(form) => {
           sendGift(form)
           setIsShowGiftPopup(false)
-        }} />
+        }} userId={form?.userId} />
         <ImagePopup open={isShowImgModel}
           onCloseModal={() => { setIsShowImgModel(false) }}
           url={selectedJSONImg?.url}

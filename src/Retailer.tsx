@@ -135,6 +135,73 @@ export default Retailer;
 
 const owlClass = "popup";
 function ImportCustomerPopup({ open, onCloseModal }: any) {
+  const [file, setFile] = useState(null as any);
+
+  const submit = () => {
+    if (file != null) {
+      UserModel.uploadFile(file)
+        .then(resp => {
+          if (resp.error == 0) {
+            AlertUtils.showSuccess('Upload thành công')
+          } else {
+            AlertUtils.showError(resp.msg);
+          }
+        })
+    }
+  }
+
+  return (
+    <Modal
+      open={open}
+      onClose={onCloseModal}
+      center
+      showCloseIcon={false}
+      styles={{
+        modal: {
+          background: "rgba(242, 242, 242, 0.94)",
+          backdropFilter: "blur(54.3656px)",
+          borderRadius: "14px",
+          padding: "0",
+          width: '500px'
+        },
+      }}
+    >
+      <div className={owlClass}>
+        <div style={{ margin: '0' }} className="row">
+          <div style={{ padding: '0' }} className="col-12">
+            <div style={{ margin: '0' }} className="card">
+              <div className="card-header">
+                <h5 className="card-title">Thông tin khách hàng</h5>
+                <h6 className="card-subtitle text-muted">Vui lòng nhập thông tin khách hàng</h6>
+              </div>
+              <div className="card-body">
+                <div className="container-fluid">
+                  <div style={{ margin: '0' }} className="row">
+                    <div className="col-12 col-lg-12">
+                      <div className="form-group">
+                        <label className="form-label w-100">File input</label>
+                        <input onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                          setFile(event.target.files![0])
+                        }} type="file" />
+                        <small className="form-text text-muted">Example block-level help text here.</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{ paddingRight: '20px' }} className="cart-btn-bar">
+                <button onClick={() => { onCloseModal() }} style={{ float: 'right', margin: '20px' }} className="btn btn-primary mr-1 btn-cancel">Hủy</button>
+                <button onClick={() => { submit() }} style={{ float: 'right', margin: '20px' }} className="btn btn-primary mr-1">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Modal>
+  );
+}
+
+function ImportCustomerPopup2({ open, onCloseModal }: any) {
   const [form, setForm] = useState<RegisterForm>({} as RegisterForm)
 
   const onSelectCement = (cementId: number) => {

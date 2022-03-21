@@ -13,7 +13,7 @@ export default class APIUtils {
       .then(returnedValue => {
         success(returnedValue);
       })
-      .catch(function(ex) {
+      .catch(function (ex) {
         if (error) {
           error(ex);
         }
@@ -30,7 +30,7 @@ export default class APIUtils {
       .then(returnedValue => {
         success(returnedValue);
       })
-      .catch(function(ex) {
+      .catch(function (ex) {
         if (error) {
           error(ex);
         }
@@ -52,7 +52,7 @@ export default class APIUtils {
       .then(returnedValue => {
         success(returnedValue);
       })
-      .catch(function(ex) {
+      .catch(function (ex) {
         if (error) {
           error(ex);
         }
@@ -73,7 +73,7 @@ export default class APIUtils {
       .then(returnedValue => {
         success(returnedValue);
       })
-      .catch(function(ex) {
+      .catch(function (ex) {
         if (error) {
           error(ex);
         }
@@ -95,7 +95,7 @@ export default class APIUtils {
       .then(returnedValue => {
         success(returnedValue);
       })
-      .catch(function(ex) {
+      .catch(function (ex) {
         if (error) {
           error(ex);
         }
@@ -114,7 +114,7 @@ export default class APIUtils {
       .then(returnedValue => {
         success(returnedValue);
       })
-      .catch(function(ex) {
+      .catch(function (ex) {
         if (error) {
           error(ex);
         }
@@ -133,7 +133,26 @@ export default class APIUtils {
       .then(returnedValue => {
         success(returnedValue);
       })
-      .catch(function(ex) {
+      .catch(function (ex) {
+        if (error) {
+          error(ex);
+        }
+      });
+  }
+
+  static uploadFile(url, formData, success, error) {
+    fetch(url, {
+      method: 'post',
+      credentials: 'include',
+      body: formData
+    })
+      .then(resp => {
+        return resp.json();
+      })
+      .then(returnedValue => {
+        success(returnedValue);
+      })
+      .catch(function (ex) {
         if (error) {
           error(ex);
         }

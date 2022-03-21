@@ -50,4 +50,12 @@ export default class UserModel {
         });
     }
 
+    static uploadFile(data) {
+        const formData = new FormData();
+        formData.append("file", data);
+        return new Promise((resolve, reject) => {
+            APIUtil.uploadFile(process.env.REACT_APP_DOMAIN + `/api/user/upload-customer-excel`, formData, resolve, reject);
+        });
+    }
+
 }

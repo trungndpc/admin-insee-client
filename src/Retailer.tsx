@@ -29,6 +29,17 @@ function Retailer() {
       })
   }
 
+  const exportUser = () => {
+    var url = new URL(`${process.env.REACT_APP_DOMAIN}/api/user/export-excel`);
+    if (filter.status && filter.status != 0) {
+      url.searchParams.append('status', filter.status + '');
+    }
+    if (filter.cityId && filter.cityId != 0) {
+      url.searchParams.append('city', filter.cityId + '');
+    }
+    window.open(url.toString(), '_blank')
+  }
+
   useEffect(() => {
     fetchUsers(filter.cityId, filter.status)
   }, [])
@@ -84,7 +95,7 @@ function Retailer() {
                       </select>
                     </div>
                     <button style={{ marginRight: '10px !important' }} onClick={() => { setIsOpenImportCustomerPopup(true) }} className="btn btn-primary mr-1">Import</button>
-                    <button style={{ marginRight: '20px !important', backgroundColor: '#6f42c1' }} onClick={() => { window.open(`${process.env.REACT_APP_DOMAIN}/api/user/export-excel`, '_blank') }} className="btn btn-primary mr-1">Export</button>
+                    <button style={{ marginRight: '20px !important', backgroundColor: '#6f42c1' }} onClick={() => { exportUser() }} className="btn btn-primary mr-1">Export</button>
                   </div>
 
                 </div>
@@ -98,6 +109,7 @@ function Retailer() {
                       <th>INSEE ID</th>
                       <th>Thời gian</th>
                       <th>Trạng thái</th>
+                      <th>UTM</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -112,6 +124,7 @@ function Retailer() {
                           <td>{user.inseeId}</td>
                           <td>{DateTimeUtil.toString(user.createdTime * 1000)}</td>
                           <td><span style={{ backgroundColor: UserStatus.findColor(user.status) }} className="badge badge-info">{UserStatus.findName(user.status)}</span></td>
+                          <td>{user.utm ? user.utm : ''}</td>
                           <td className="table-action">
                             <Link to={`/retailer/${user.id}`}><i style={{ fontSize: '30px' }} className="align-middle ion ion-ios-play mr-2" /></Link>
                           </td>

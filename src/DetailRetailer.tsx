@@ -171,9 +171,9 @@ function DetailRetailer() {
                     </div>
                     {user &&
                       <div className="card-footer">
-                        {(user.status != UserStatus.APPROVED && user.status != UserStatus.REJECTED) &&
+                        {/* {(user.status != UserStatus.APPROVED && user.status != UserStatus.REJECTED) && */}
                           <button style={{ marginRight: '40px' }} onClick={() => { setIsShowConfirmUpdatePopup(true) }} type="submit" className="btn btn-danger m-btn-danger">Save</button>
-                        }
+                        {/* } */}
                         {user.status == UserStatus.WAIT_APPROVAL &&
                           <>
                             <button onClick={() => { setIsShowConfirmPopup(true) }} type="submit" className="btn btn-danger m-btn-danger">Duyệt</button>

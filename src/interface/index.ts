@@ -20,6 +20,7 @@ export interface User {
     products: Array<number>
     inseeId: string
     createdTime: number
+    utm: string
 }
 
 export interface Post {

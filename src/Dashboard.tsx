@@ -107,7 +107,7 @@ function Dashboard() {
                       </div>
                     </div>
                   </div>
-                  <h1 className="display-5 mt-1 mb-3">{countUser?.numUser}</h1>
+                  <h1 className="display-5 mt-1 mb-3">{countUser?.numApprovedUser}</h1>
                 </div>
               </div>
             </div>

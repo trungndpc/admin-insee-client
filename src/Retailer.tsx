@@ -154,6 +154,7 @@ function ImportCustomerPopup({ open, onCloseModal }: any) {
     if (file != null) {
       UserModel.uploadFile(file)
         .then(resp => {
+          onCloseModal()
           if (resp.error == 0) {
             AlertUtils.showSuccess('Upload thành công')
           } else {

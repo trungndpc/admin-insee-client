@@ -13,6 +13,7 @@ import AlertUtils from "./utils/AlertUtils";
 import FormModel from "./model/FormModel";
 import PromotionModel from "./model/PromotionModel";
 import { STOCK_PROMOTION_TYPE } from "./constant/PromotionType";
+import DateTimeUtil from "./utils/DateTimeUtil";
 
 const default_avatar = 'http://cdn.onlinewebfonts.com/svg/img_264570.png'
 const PAGE_SIZE = 10;
@@ -126,6 +127,7 @@ function PromotionForms() {
                       <th>Cửa hàng</th>
                       <th>Thành phố / Quận</th>
                       <th>INSEE ID</th>
+                      <th>Thời gian</th>
                       <th>Trạng thái</th>
                       <th>Actions</th>
                     </tr>
@@ -139,6 +141,7 @@ function PromotionForms() {
                           <td>{form.user.name}</td>
                           <td>{City.getName(form.user.cityId)}</td>
                           <td>{form.user.inseeId}</td>
+                          <td>{DateTimeUtil.toString(form.time * 1000)}</td>
                           <td><span style={{ backgroundColor: StockFormStatus.findColor(form.status) }} className="badge badge-info">{StockFormStatus.findName(form.status)}</span></td>
                           <td className="table-action">
                             <Link to={`/form/detail/${form.id}`}><i style={{ fontSize: '30px' }} className="align-middle ion ion-ios-play mr-2" /></Link>

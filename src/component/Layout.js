@@ -18,8 +18,8 @@ export default class Layout extends React.PureComponent {
                     </a>
                     <div className="sidebar-content">
                         <div className="sidebar-user">
-                            <img src="https://s120-ava-talk.zadn.vn/f/f/a/9/10/120/87069ccaa43702ad56ec93fe5a75f24f.jpg" className="img-fluid rounded-circle mb-2" alt="Linda Miller" />
-                            <div className="font-weight-bold">Đình Trung</div>
+                            <img src="https://admin.insee.udev.com.vn/static/upload/rtl-insee.png" className="img-fluid rounded-circle mb-2" alt="Linda Miller" />
+                            <div className="font-weight-bold">INSEE ADMIN</div>
                         </div>
                         <ul className="sidebar-nav">
                             <li className="sidebar-header">
@@ -54,7 +54,7 @@ export default class Layout extends React.PureComponent {
                             </li>
                             <li className={`sidebar-item ${this.isActive('/egagement') && 'active'}`}>
                                 <Link to="/egagement" data-toggle="collapse" className="sidebar-link collapsed">
-                                    <i className="align-middle far fa-fw fa-heart" /> <span className="align-middle">Egagements </span>
+                                    <i className="align-middle far fa-fw fa-heart" /> <span className="align-middle">Engagements</span>
                                 </Link>
                                 <ul className={`sidebar-dropdown list-unstyled collapse ${this.isActive('/egagement') ? ' show' : ''}`} data-parent="#sidebar">
                                     <li className="sidebar-item active"><Link className="sidebar-link" to={"/egagement/list"}>DS Chiến dịch</Link></li>

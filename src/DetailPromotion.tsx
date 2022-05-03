@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Form, Page, Promotion, StatsForm } from "./interface";
 import DetailStockPromotion from "./promotion/DetailStockPromotion";
 import DetailLQuizPromotion from "./promotion/DetailLQuizPromotion";
+import DetailPredictFootballPromotion from "./promotion/DetailPredictFootballPromotion";
 
 function DetailPromotion() {
   let { id } = useParams();
@@ -92,6 +93,7 @@ function DetailPromotion() {
           <div className="row">
             {promotion?.type == 20 && <DetailStockPromotion />}
             {promotion?.type == 21 && <DetailLQuizPromotion />}
+            {promotion?.type == 4 && <DetailPredictFootballPromotion/>}
           </div>
         </div>
       </main>

@@ -38,6 +38,7 @@ import DashboardPromotion from './DashboardPromotion';
 import CreateOrUpdateEngagement from './CreateOrUpdateEngagement';
 import DashboardGift from './DashboardGift';
 import Gifts from './Gifts';
+import ListPredictFootballForm from './ListPredictFootballForm';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -71,6 +72,7 @@ ReactDOM.render(
         <Route path="/broadcast/create-or-update/:id" element={<CreateOrUpdateBroadcast />} />
         <Route path="/broadcast/detail/:id" element={<DetailBroadcast />} />
 
+        <Route path="/form/match/:id" element={<ListPredictFootballForm />} />
         <Route path="/form/list/:id/:topicId" element={<ListLightingQuizForm />} />
         <Route path="/promotion/detail/:id" element={<DetailPromotion />} />
         <Route path="/promotion/detail/:id/:topicId" element={<DetailPromotion />} />

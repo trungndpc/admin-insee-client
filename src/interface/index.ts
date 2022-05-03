@@ -55,6 +55,7 @@ export interface Promotion {
     cityIds: Array<number>,
     districtIds: Array<number>,
     cements: Array<number>
+    season: string
 }
 
 export interface Form {
@@ -219,4 +220,33 @@ export interface GiftDTO {
     totalValue: number
     user: User,
     status: number
+}
+
+export interface EgagementsFilter {
+    type: number
+}
+
+
+export interface MatchFootball {
+    id: number,
+    teamOne: string,
+    teamTwo: string,
+    logoTeamOne: string,
+    logoTeamTwo: string,
+    timeStart: number,
+    status: number,
+    teamOneScore: number,
+    teamTwoScore: number
+    season: string
+}
+
+export interface PredictMatchForm {
+    user: User,
+    match: MatchFootball,
+    matchId: number,
+    season: string,
+    teamOneScore: string,
+    teamTwoScore: string,
+    teamWin: number,
+    status: number,
 }

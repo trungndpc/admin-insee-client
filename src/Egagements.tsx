@@ -1,27 +1,31 @@
 import Layout from "./component/Layout";
 import "react-responsive-modal/styles.css";
 import "../src/popup/styles.scss";
+import { useNavigate } from "react-router-dom";
 import PromotionModel from "./model/PromotionModel";
 import { useEffect, useState } from "react";
-import { Page, Promotion } from "./interface";
+import { Page, Promotion, EgagementsFilter } from "./interface";
 import { Link } from "react-router-dom";
 import { City, District } from "./utils/ProvinceUtil";
-import * as CementUtil from "./utils/CementUtil";
 import * as PromotionType from './constant/PromotionType'
 import * as PromotionStatus from './constant/PromotionStatus'
 import AlertUtils from "./utils/AlertUtils";
 import { AreYouSurePopup } from "./popup";
+import { type } from "os";
+
 
 
 
 function Egagements() {
+  const navigate = useNavigate()
   const [promotionPage, setPromotionPage] = useState<Page<Promotion>>()
   const [isShowApprovedPopup, setIsShowApprovedPopup] = useState(false)
   const [isShowRemovedPopup, setIsShowRemovedPopup] = useState(false)
   const [selectedId, setSelectedId] = useState<number>()
+  const [filter, setFilter] = useState<EgagementsFilter>({ type: PromotionType.LIGHTING_QUIZ_GAME_PROMOTION_TYPE })
 
-  const fetchPromotionPage = () => {
-    PromotionModel.list(PromotionType.LIGHTING_QUIZ_GAME_PROMOTION_TYPE)
+  const fetchPromotionPage = (type: number) => {
+    PromotionModel.list([type])
       .then(resp => {
         if (resp.error == 0) {
           setPromotionPage(resp.data);
@@ -34,7 +38,7 @@ function Egagements() {
       .then(resp => {
         if (resp.error == 0) {
           AlertUtils.showSuccess('Thành công')
-          fetchPromotionPage()
+          fetchPromotionPage(filter.type)
         } else {
           AlertUtils.showError(resp.msg)
         }
@@ -42,7 +46,7 @@ function Egagements() {
   }
 
   useEffect(() => {
-    fetchPromotionPage()
+    fetchPromotionPage(filter.type)
   }, [])
 
   return (
@@ -76,9 +80,20 @@ function Egagements() {
           <div className="row">
             <div className="col-12 col-xl-12">
               <div className="card">
-                <div className="card-header">
-                  <div className="cart-btn-bar">
-                    <Link to={"/egagement/create-or-update"} className="btn btn-primary mr-1">Thêm chiến dịch</Link>
+                <div className="card-bar" style={{ padding: '20px' }}>
+                  <div className="row">
+                    <div className="col-2 col-xl-2 ml-auto">
+                      <select onChange={(e: React.FormEvent<HTMLSelectElement>) => {
+                        setFilter({ ...filter, type: Number(e.currentTarget.value) })
+                        fetchPromotionPage(Number(e.currentTarget.value))
+                      }} className="form-control">
+                        <option value={PromotionType.LIGHTING_QUIZ_GAME_PROMOTION_TYPE}>Nhanh như chớp</option>
+                        <option value={PromotionType.PREDICT_FOOTBALL}>Dự đoán bóng đá</option>
+                      </select>
+                    </div>
+                    <button style={{ marginRight: '10px !important' }} onClick={() => {
+                      navigate('/egagement/create-or-update')
+                    }} className="btn btn-primary mr-1">Tạo mới</button>
                   </div>
                 </div>
                 <table className="table table-striped table-hover">

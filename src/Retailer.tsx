@@ -11,10 +11,12 @@ import { Link } from "react-router-dom";
 import * as UserStatus from './constant/UserStatus';
 import AlertUtils from "./utils/AlertUtils";
 import DateTimeUtil from "./utils/DateTimeUtil";
+import { useSearchParams } from 'react-router-dom';
 
 const default_avatar = 'http://cdn.onlinewebfonts.com/svg/img_264570.png'
 const PAGE_SIZE = 500;
 function Retailer() {
+  let [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(0);
   const [userPage, setUserPage] = useState<Page<User>>()
   const [isOpenImportCustomerPopup, setIsOpenImportCustomerPopup] = useState(false)
@@ -25,6 +27,7 @@ function Retailer() {
       .then(resp => {
         if (resp.error == 0) {
           setUserPage(resp.data)
+          serialize2Url({ ...filter, cityId: cityId, status: status })
         }
       })
   }
@@ -40,8 +43,22 @@ function Retailer() {
     window.open(url.toString(), '_blank')
   }
 
+  const serialize2Url = (f: UserFilter) => {
+    var str = JSON.stringify(f)
+    if (str != "{}") {
+      searchParams.set('filter', str)
+      setSearchParams(searchParams)
+    }
+  }
+
   useEffect(() => {
-    fetchUsers(filter.cityId, filter.status)
+    var param = searchParams.get('filter') as string;
+    var userFilter = { ...filter }
+    if (param) {
+      userFilter = JSON.parse(param)
+    }
+    fetchUsers(userFilter.cityId, userFilter.status)
+    setFilter(userFilter)
   }, [])
 
   return (
@@ -66,10 +83,8 @@ function Retailer() {
                   <div className="row ">
                     <div className="col-2 col-xl-2 ml-auto">
                       <select value={filter.cityId ? filter.cityId : 0} onChange={(e: React.FormEvent<HTMLSelectElement>) => {
-
                         fetchUsers(Number(e.currentTarget.value), filter.status)
                         setFilter({ ...filter, cityId: Number(e.currentTarget.value) })
-
                       }} className="form-control">
                         <option value={0}>Thành phố</option>
                         {City.getList().map((value) => {

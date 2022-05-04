@@ -8,4 +8,10 @@ export default class MatchFootballModel {
         });
     }
 
+    static updateResult(promotionId, matchId, scoreTeamOne, scoreTeamTwo) {
+        return new Promise((resolve, reject) => {
+            APIUtil.getJSONWithCredentials(process.env.REACT_APP_DOMAIN + `/api/match-football/update-result-match?promotionId=${promotionId}&matchId=${matchId}&scoreTeamOne=${scoreTeamOne}&scoreTeamTwo=${scoreTeamTwo}`, resolve, reject);
+        });
+    }
+
 }

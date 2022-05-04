@@ -139,7 +139,6 @@ export function ConfirmPhonePopup({ phone, storeName, open, onCloseModal, onAgre
 }
 
 
-
 export function ErrorPopup({ open, onCloseModal }) {
   return (
     <Modal

@@ -250,3 +250,8 @@ export interface PredictMatchForm {
     teamWin: number,
     status: number,
 }
+
+export interface Accumulation {
+    user : User,
+    point: number,
+}

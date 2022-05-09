@@ -104,12 +104,13 @@ function DetailPredictFootballPromotion() {
                                         <td>{match.teamOne}</td>
                                         <td>
                                             {match.status == 1 &&
-                                                <p style={{ cursor: 'pointer' }} onClick={() => {
-                                                    setSelectMatch(match)
-                                                    setIsShowUpdateResultPopop(true)
-                                                }
-                                                }>Chưa bắt đầu</p>
+                                                <p >Chưa bắt đầu</p>
                                             }
+                                            {match.status == 2 && <p style={{ cursor: 'pointer' }} onClick={() => {
+                                                setSelectMatch(match)
+                                                setIsShowUpdateResultPopop(true)
+                                            }
+                                            }>Cập nhật kết quả</p>}
                                             {match.status == 3 && `${match.teamOneScore} - ${match.teamTwoScore}`}
                                         </td>
                                         <td>{match.teamTwo}</td>

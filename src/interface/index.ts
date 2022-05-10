@@ -237,7 +237,10 @@ export interface MatchFootball {
     status: number,
     teamOneScore: number,
     teamTwoScore: number
-    season: string
+    season: string,
+    totalPredict: number,
+    totalWin: number,
+    totalFailed: number
 }
 
 export interface PredictMatchForm {

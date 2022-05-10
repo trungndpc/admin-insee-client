@@ -93,6 +93,9 @@ function DetailPredictFootballPromotion() {
                                 <th>Đội</th>
                                 <th>Kết quả</th>
                                 <th>Đội</th>
+                                <th>Dự đoán</th>
+                                <th>Chính xác</th>
+                                <th>Sai</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -114,6 +117,9 @@ function DetailPredictFootballPromotion() {
                                             {match.status == 3 && `${match.teamOneScore} - ${match.teamTwoScore}`}
                                         </td>
                                         <td>{match.teamTwo}</td>
+                                        <td>{match.totalPredict}</td>
+                                        <td>{match.totalWin}</td>
+                                        <td>{match.totalFailed}</td>
                                         <td className="table-action">
                                             <Link to={`/form/match/${match.id}`}><i style={{ fontSize: '30px' }} className="align-middle ion  mr-2" />CHI TIẾT</Link>
                                         </td>

@@ -103,7 +103,7 @@ function DetailPredictFootballPromotion() {
                             {matchPage && matchPage.list && matchPage.list.map((match: MatchFootball, index: number) => {
                                 return (
                                     <tr>
-                                        <td>{moment(new Date(match.timeStart * 1000)).format("hh:mm MM-DD")}</td>
+                                        <td>{moment(new Date(match.timeStart * 1000)).format("HH:mm MM-DD")}</td>
                                         <td>{match.teamOne}</td>
                                         <td>
                                             {match.status == 1 &&

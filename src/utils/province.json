@@ -2840,6 +2840,11 @@
                 "name": "Huyện Cát Tiên",
                 "id": 1498,
                 "status": 1
+            },
+            {
+                "name": "Bảo Lâm",
+                "id": 1707,
+                "status": 1
             }
         ],
         "index": 31,
@@ -3326,6 +3331,11 @@
                 "name": "Huyện Cần Giuộc",
                 "id": 1584,
                 "status": 1
+            },
+            {
+                "name": "Châu Thành",
+                "id": 1708,
+                "status": 1
             }
         ],
         "index": 29,
@@ -3485,6 +3495,11 @@
                 "name": "Thị xã Duyên Hải",
                 "id": 1611,
                 "status": 1
+            },
+            {
+                "name": "Châu Thành",
+                "id": 1710,
+                "status": 1
             }
         ],
         "index": 51,
@@ -3596,6 +3611,16 @@
                 "name": "Huyện Châu Thành",
                 "id": 1699,
                 "status": 1
+            },
+            {
+                "name": "Hồng Ngự",
+                "id": 1704,
+                "status": 1
+            },
+            {
+                "name": "Tam Nông",
+                "id": 1705,
+                "status": 1
             }
         ],
         "index": 62,
@@ -3648,6 +3673,11 @@
             {
                 "name": "Huyện Thoại Sơn",
                 "id": 1638,
+                "status": 1
+            },
+            {
+                "name": "Chợ Mới",
+                "id": 1700,
                 "status": 1
             }
         ],
@@ -3727,6 +3757,11 @@
                 "name": "Huyện Giang Thành",
                 "id": 1652,
                 "status": 1
+            },
+            {
+                "name": "Châu Thành",
+                "id": 1706,
+                "status": 1
             }
         ],
         "index": 26,
@@ -3770,6 +3805,16 @@
                 "name": "Huyện Thới Lai",
                 "id": 1659,
                 "status": 1
+            },
+            {
+                "name": "Phong Điền",
+                "id": 1702,
+                "status": 1
+            },
+            {
+                "name": "Vĩnh Thạnh",
+                "id": 1703,
+                "status": 1
             }
         ],
         "index": 13,
@@ -3812,6 +3857,11 @@
             {
                 "name": "Thị xã Long Mỹ",
                 "id": 1666,
+                "status": 1
+            },
+            {
+                "name": "Châu Thành",
+                "id": 1712,
                 "status": 1
             }
         ],
@@ -3870,6 +3920,11 @@
             {
                 "name": "Huyện Trần Đề",
                 "id": 1676,
+                "status": 1
+            },
+            {
+                "name": "Châu Thành",
+                "id": 1709,
                 "status": 1
             }
         ],
@@ -3996,6 +4051,11 @@
             {
                 "name": "Huyện Ngọc Hiển",
                 "id": 1698,
+                "status": 1
+            },
+            {
+                "name": "Phú Tân",
+                "id": 1711,
                 "status": 1
             }
         ],

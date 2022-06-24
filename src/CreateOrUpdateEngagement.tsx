@@ -2,7 +2,6 @@ import Layout from "./component/Layout";
 import "react-responsive-modal/styles.css";
 import "../src/popup/styles.scss";
 import Select from 'react-select'
-import * as CementEnum from './component/enum/CementEnum'
 import { City, District } from './utils/ProvinceUtil'
 import { useEffect, useState } from "react";
 import { Promotion } from "./interface";

@@ -79,7 +79,7 @@ function DetailRetailer() {
       {<AreYouSurePopup open={isShowConfirmDeletePopup} onAgree={() => {
         setIsShowConfirmDeletePopup(false)
         updateStatus(user?.id, UserStatus.DISABLED, null)
-        navigate("/retailer/list")
+        navigate(-1)
       }} onCloseModal={() => {
         setIsShowConfirmDeletePopup(false)
       }} />}

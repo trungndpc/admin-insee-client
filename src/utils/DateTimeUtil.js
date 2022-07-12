@@ -34,7 +34,7 @@ export default class DateTimeUtil {
     static toStringNotYear(date) {
         let mon = date.getMonth() + 1;
         let day = date.getDate();
-        return day + ', th' + mon;
+        return day + ', tháng' + mon;
     }
 
 }

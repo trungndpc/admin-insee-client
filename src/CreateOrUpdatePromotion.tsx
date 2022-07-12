@@ -97,9 +97,9 @@ function CreateOrUpdatePromotion() {
                         <select value={form.type} disabled={id != null} onChange={(e: React.FormEvent<HTMLSelectElement>) => { setForm({ ...form, type: Number(e.currentTarget.value) }) }} id="inputState" className="form-control">
                           <option selected>Choose...</option>
                           <option value={20}>Stock Promotion</option>
+                          <option value={22}>Greeting New Friend</option>
                           {/* <option value={21}>Lighting Quiz Promotion</option> */}
                           {/* <option value={0}>Dự đoán kết quả bóng đá</option> */}
-                          <option value={0}>Loyalty</option>
                         </select>
                       </div>
                     </div>

@@ -11,6 +11,7 @@ import * as PromotionType from './constant/PromotionType'
 import { AreYouSurePopup } from "./popup";
 import AlertUtils from "./utils/AlertUtils";
 import * as PromotionStatus from './constant/PromotionStatus'
+import DateTimeUtil from "./utils/DateTimeUtil";
 
 function Promotions() {
   const [promotionPage, setPromotionPage] = useState<Page<Promotion>>()
@@ -19,7 +20,7 @@ function Promotions() {
   const [selectedId, setSelectedId] = useState<number>()
 
   const fetchPromotionPage = () => {
-    PromotionModel.list(PromotionType.STOCK_PROMOTION_TYPE)
+    PromotionModel.list([PromotionType.STOCK_PROMOTION_TYPE, PromotionType.GREETING_NEW_FRIEND_PROMOTION_TYPE])
       .then(resp => {
         if (resp.error == 0) {
           setPromotionPage(resp.data);
@@ -88,6 +89,7 @@ function Promotions() {
                       <th>Type</th>
                       <th>City</th>
                       <th>District</th>
+                      <th>Duration</th>
                       <th>Status</th>
                       <th>Actions</th>
                     </tr>
@@ -98,12 +100,15 @@ function Promotions() {
                         <tr>
                           <td>{promotion.id}</td>
                           <td>{promotion.title}</td>
-                          <td>{promotion.type == 20 ? 'Stock Promotion' : 'Lighting Quiz Game'}</td>
+                          <td>{PromotionType.findName(promotion.type)}</td>
                           <td>
                             {promotion.cityIds && promotion.cityIds.map((l: number) => City.getName(l)).join(", ")}
                           </td>
                           <td>
                             {promotion.districtIds && promotion.districtIds.map((l: number) => District.getName(l)).join(", ")}
+                          </td>
+                          <td>
+                            {DateTimeUtil.toStringNotYear(new Date(promotion.timeStart))} - {DateTimeUtil.toStringNotYear(new Date(promotion.timeEnd))}
                           </td>
                           <td><span style={{ backgroundColor: PromotionStatus.findColor(promotion.status) }}
                             className="badge badge-info">{PromotionStatus.findName(promotion.status)}</span></td>

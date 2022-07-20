@@ -1,14 +1,16 @@
 import Layout from "./component/Layout";
 import "react-responsive-modal/styles.css";
 import "../src/popup/styles.scss";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import PromotionModel from "./model/PromotionModel";
-import FormModel from "./model/FormModel";
 import { useEffect, useState } from "react";
 import { Form, Page, Promotion, StatsForm } from "./interface";
 import DetailStockPromotion from "./promotion/DetailStockPromotion";
 import DetailLQuizPromotion from "./promotion/DetailLQuizPromotion";
 import DetailPredictFootballPromotion from "./promotion/DetailPredictFootballPromotion";
+import DetailGreetingFriendPromotion from "./promotion/DetailGreetingFriendPromotion";
+import { GREETING_NEW_FRIEND_PROMOTION_TYPE, 
+  LIGHTING_QUIZ_GAME_PROMOTION_TYPE, PREDICT_FOOTBALL, STOCK_PROMOTION_TYPE } from "./constant/PromotionType";
 
 function DetailPromotion() {
   let { id } = useParams();
@@ -24,18 +26,18 @@ function DetailPromotion() {
       })
   }
 
-  const fetchStatsPromotion = () => {
-    FormModel.statsByPromotion(id)
-      .then(resp => {
-        if (resp.error == 0) {
-          setStatsForm(resp.data)
-        }
-      })
-  }
+  // const fetchStatsPromotion = () => {
+  //   FormModel.statsByPromotion(id)
+  //     .then(resp => {
+  //       if (resp.error == 0) {
+  //         setStatsForm(resp.data)
+  //       }
+  //     })
+  // }
 
   useEffect(() => {
     fetchPromotionById()
-    fetchStatsPromotion()
+    // fetchStatsPromotion()
   }, [])
 
   return (
@@ -91,9 +93,10 @@ function DetailPromotion() {
             }
           </div>
           <div className="row">
-            {promotion?.type == 20 && <DetailStockPromotion />}
-            {promotion?.type == 21 && <DetailLQuizPromotion />}
-            {promotion?.type == 4 && <DetailPredictFootballPromotion/>}
+            {promotion?.type == STOCK_PROMOTION_TYPE && <DetailStockPromotion />}
+            {promotion?.type == LIGHTING_QUIZ_GAME_PROMOTION_TYPE && <DetailLQuizPromotion />}
+            {promotion?.type == PREDICT_FOOTBALL && <DetailPredictFootballPromotion />}
+            {promotion?.type == GREETING_NEW_FRIEND_PROMOTION_TYPE && <DetailGreetingFriendPromotion />}
           </div>
         </div>
       </main>

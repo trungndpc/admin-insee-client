@@ -6,6 +6,8 @@ import FormModel from "./model/FormModel";
 import { useEffect, useState } from "react";
 import { Form, StockForm } from "./interface";
 import DetailStockForm from "./promotion/DetailStockForm";
+import DetailGreetingFriendForm from "./promotion/DetailGreetingFriendForm";
+import { GREETING_NEW_FRIEND_PROMOTION_TYPE, STOCK_PROMOTION_TYPE } from "./constant/PromotionType";
 
 
 function DetailForm() {
@@ -27,8 +29,11 @@ function DetailForm() {
 
   return (
     <Layout>
-      {form && form.type == 20 &&
+      {form && form.type == STOCK_PROMOTION_TYPE &&
         <DetailStockForm data={form} />
+      }
+      {form && form.type == GREETING_NEW_FRIEND_PROMOTION_TYPE &&
+        <DetailGreetingFriendForm data={form} />
       }
     </Layout>
 
